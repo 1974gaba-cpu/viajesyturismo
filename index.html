@@ -28,7 +28,14 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   .tabs{display:none!important}
   .fab-wrap{display:none!important}
   .tc{display:block!important;animation:none!important}
-  .section-hdr{display:flex;justify-content:space-between;align-items:center;padding:24px 0 14px;border-bottom:2px solid var(--border);margin-bottom:18px;position:sticky;top:0;background:var(--cream);z-index:15;box-shadow:0 2px 8px rgba(255,250,244,.95)}
+  .section-hdr{display:flex;justify-content:space-between;align-items:center;padding:24px 0 14px;border-bottom:2px solid var(--border);margin-bottom:18px}
+  /* Fixed FABs desktop */
+  .desktop-fabs{position:fixed;bottom:28px;right:388px;display:flex;flex-direction:column;gap:8px;z-index:50}
+  .dfab{display:flex;align-items:center;gap:8px;border:none;border-radius:11px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .dfab.day{background:linear-gradient(135deg,#FF8C5A,#FFAA7A);color:#fff;box-shadow:0 4px 14px rgba(255,140,90,.25)}
+  .dfab.day:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(255,140,90,.35)}
+  .dfab.gasto{background:#fff;color:var(--ink2);border:1.5px solid var(--border);box-shadow:0 3px 10px rgba(0,0,0,.08)}
+  .dfab.gasto:hover{border-color:#FF8C5A;color:#FF8C5A}
   .section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink)}
   .add-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:11px;padding:10px 18px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.25);transition:all .2s}
   .add-btn:hover{transform:translateY(-1px)}
@@ -73,6 +80,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   .tc{display:none;padding:0;animation:fadeUp .25s ease}
   .tc.active{display:block}
   .add-btn{display:none}
+  .desktop-fabs{display:none!important}
 }
 
 /* ── HEADER ── */
@@ -491,6 +499,13 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
     <button class="bsave" onclick="createTrip()">Crear viaje</button>
     <button class="bcancel" onclick="closeNewTrip()">Cancelar</button>
   </div>
+</div>
+
+
+<!-- Desktop fixed FABs -->
+<div class="desktop-fabs" id="desktopFabs">
+  <button class="dfab day" onclick="openDayModal(null,null)"><i class="fa-solid fa-plus"></i> Agregar Día</button>
+  <button class="dfab gasto" onclick="openGastoModal(null)"><i class="fa-solid fa-plus"></i> Agregar Gasto</button>
 </div>
 
 <!-- hidden file input for import -->
