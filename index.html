@@ -10,65 +10,59 @@
 :root{
   --cream:#FFFAF4;--warm:#FFF3E4;--card:#FFFFFF;
   --coral:#FF6B35;--coral2:#FF8C5A;--teal:#00A896;--teal2:#02C9B5;
-  --gold:#FFB703;--sky:#4CC9F0;--rose:#F72585;--violet:#7B2FBE;
+  --gold:#FFB703;--rose:#F72585;--violet:#7B2FBE;
   --ink:#1A1A2E;--ink2:#3D405B;--ink3:#8D99AE;--ink4:#BEC8D1;
   --border:#EDE8E0;--shadow:0 4px 20px rgba(0,0,0,.08);
-  --hdr-h:320px;
+  --green:#16A34A;--amber:#D97706;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{height:100%;background:var(--cream)}
-body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);min-height:100%}
+html{background:var(--cream)}
+body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);min-height:100vh}
 
-/* ══════════════════════════════════════════
-   DESKTOP LAYOUT
-══════════════════════════════════════════ */
+/* ── DESKTOP GRID ── */
 @media(min-width:900px){
-  body{display:grid;grid-template-rows:auto 1fr;grid-template-columns:1fr 380px;grid-template-areas:"hdr sidebar" "main sidebar";min-height:100vh}
+  body{display:grid;grid-template-rows:auto 1fr;grid-template-columns:1fr 360px;grid-template-areas:"hdr sidebar" "main sidebar";min-height:100vh}
   .hdr{grid-area:hdr}
-  .main-area{grid-area:main;padding:28px 32px 60px;overflow-y:auto}
-  .sidebar{grid-area:sidebar;background:#fff;border-left:2px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:16px}
-  /* hide mobile tabs & fab on desktop */
+  .main-area{grid-area:main;padding:0 32px 60px;overflow-y:auto}
+  .sidebar{grid-area:sidebar;background:#fff;border-left:2px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;padding:24px 22px 40px;display:flex;flex-direction:column;gap:14px}
   .tabs{display:none!important}
   .fab-wrap{display:none!important}
-  /* show all sections on desktop */
-  .tc{display:block!important;padding:0;animation:none}
-  /* desktop section headers */
-  .section-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
-  .section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink)}
-  .add-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.28);transition:all .2s}
-  .add-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,107,53,.38)}
-  .section-divider{height:1px;background:var(--border);margin:28px 0}
-  /* sidebar components */
-  .sidebar-total{background:linear-gradient(135deg,#0F3460,#1A1A4E);border-radius:18px;padding:22px 20px;text-align:center;position:relative;overflow:hidden}
-  .sidebar-total::before{content:'✈';position:absolute;font-size:100px;opacity:.04;right:-15px;top:-15px}
-  .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.4);margin-bottom:8px}
-  .sb-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:#fff;line-height:1}
-  .sb-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:6px}
+  .tc{display:block!important;animation:none!important}
+  .section-hdr{display:flex;justify-content:space-between;align-items:center;padding:24px 0 14px;border-bottom:2px solid var(--border);margin-bottom:18px;position:sticky;top:0;background:var(--cream);z-index:5}
+  .section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink)}
+  .add-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:11px;padding:10px 18px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.25);transition:all .2s}
+  .add-btn:hover{transform:translateY(-1px)}
+  .section-divider{height:2px;background:var(--border);margin:8px 0 0}
+  .hdr-config-desktop{display:flex;gap:8px;flex-wrap:wrap;padding:12px 32px 0}
+  /* sidebar */
+  .sb-total{background:linear-gradient(135deg,#0F3460,#1A1A4E);border-radius:16px;padding:20px;text-align:center;position:relative;overflow:hidden}
+  .sb-total::before{content:'✈';position:absolute;font-size:90px;opacity:.04;right:-10px;top:-10px}
+  .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:6px}
+  .sb-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff;line-height:1}
+  .sb-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:5px}
   .sb-season{display:inline-block;background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.3);border-radius:20px;padding:3px 11px;font-size:10px;font-weight:700;color:var(--gold);margin-top:8px}
-  .sb-confirm-btn{width:100%;background:rgba(255,183,3,.1);border:1px solid rgba(255,183,3,.35);border-radius:10px;padding:9px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:#92400E;cursor:pointer;margin-top:10px;transition:all .2s}
-  .sb-confirm-btn:hover{background:rgba(255,183,3,.2)}
-  .sb-confirm-btn.confirmed{background:rgba(0,168,150,.1);border-color:rgba(0,168,150,.35);color:#00695C}
-  .sb-breakdown{background:var(--cream);border-radius:14px;padding:14px}
-  .sb-breakdown-title{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:10px}
-  .sb-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
-  .sb-row:last-child{border-bottom:none}
-  .sb-row-left{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--ink2)}
-  .sb-row-right{font-size:12px;font-weight:800;color:var(--ink2)}
-  .sb-cities{background:var(--cream);border-radius:14px;padding:14px}
-  .sb-cities-title{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:10px}
-  .city-chip{display:inline-flex;align-items:center;background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 10px;margin:3px;font-size:11px;font-weight:700;color:var(--ink2)}
-  .sb-ai-btn{width:100%;background:linear-gradient(135deg,var(--violet),#5B21B6);color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
+  .sb-btn{width:100%;border-radius:10px;padding:10px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px}
+  .sb-btn.confirm{background:rgba(255,183,3,.1);border:1px solid rgba(255,183,3,.35);color:#92400E}
+  .sb-btn.confirm:hover{background:rgba(255,183,3,.2)}
+  .sb-btn.confirmed{background:rgba(0,168,150,.1);border:1px solid rgba(0,168,150,.35);color:#00695C}
+  .sb-breakdown{background:var(--cream);border-radius:12px;padding:12px}
+  .sb-bk-title{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:8px}
+  .sb-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}
+  .sb-row:last-child{border-bottom:none;font-weight:800;color:var(--ink)}
+  .sb-row-l{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--ink2)}
+  .sb-row-r{font-size:11px;font-weight:800;color:var(--ink2)}
+  .sb-cities{background:var(--cream);border-radius:12px;padding:12px}
+  .sb-cities-title{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:8px}
+  .sb-chip{display:inline-flex;background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 10px;margin:2px;font-size:11px;font-weight:700;color:var(--ink2)}
+  .sb-ai-btn{width:100%;background:linear-gradient(135deg,var(--violet),#5B21B6);color:#fff;border:none;border-radius:11px;padding:13px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
   .sb-ai-btn:hover{opacity:.88;transform:translateY(-1px)}.sb-ai-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-  .sb-ai-result{background:var(--cream);border:1px solid #C4B5FD;border-radius:12px;padding:12px;display:none;max-height:300px;overflow-y:auto}
-  .sb-ai-result.show{display:block}
-  .sb-ai-result-body{font-size:11px;color:var(--ink2);line-height:1.7}
-  /* desktop config bar */
-  .hdr-config-desktop{display:flex;gap:10px;flex-wrap:wrap;padding:14px 32px 0}
+  .sb-ai-res{background:var(--cream);border:1px solid #C4B5FD;border-radius:11px;padding:11px;display:none;max-height:280px;overflow-y:auto;font-size:11px;color:var(--ink2);line-height:1.7}
+  .sb-ai-res.show{display:block}
+  /* io btns */
+  .sb-io{display:flex;gap:8px}
+  .sb-io-btn{flex:1;background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:9px 6px;font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;color:var(--ink3);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+  .sb-io-btn:hover{border-color:var(--coral);color:var(--coral)}
 }
-
-/* ══════════════════════════════════════════
-   MOBILE LAYOUT (default)
-══════════════════════════════════════════ */
 @media(max-width:899px){
   body{max-width:430px;margin:0 auto}
   .sidebar{display:none}
@@ -81,93 +75,94 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   .add-btn{display:none}
 }
 
-/* ══════════════════════════════════════════
-   HEADER (shared)
-══════════════════════════════════════════ */
-.hdr{
-  background:linear-gradient(175deg,#0F3460 0%,#16213E 40%,#1A1A4E 70%,#2D1B69 100%);
-  padding:18px 20px 0;position:relative;overflow:hidden;
-}
-@media(min-width:900px){.hdr{padding:22px 32px 0;}}
+/* ── HEADER ── */
+.hdr{background:linear-gradient(175deg,#0F3460 0%,#16213E 40%,#1A1A4E 70%,#2D1B69 100%);padding:18px 20px 0;position:relative;overflow:hidden}
+@media(min-width:900px){.hdr{padding:20px 32px 0}}
 .hdr-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3s infinite}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
-.hdr-glow{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);width:400px;height:80px;background:radial-gradient(ellipse,rgba(255,107,53,.2) 0%,transparent 70%);pointer-events:none}
-.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;position:relative;z-index:2}
-.trip-sel-wrap{flex:1;margin-right:10px}
+.hdr-glow{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);width:400px;height:70px;background:radial-gradient(ellipse,rgba(255,107,53,.18) 0%,transparent 70%);pointer-events:none}
+.hdr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;position:relative;z-index:2;gap:10px}
+.trip-sel-wrap{flex:1;min-width:0}
 .trip-sel-wrap select{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:7px 12px;color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;outline:none;width:100%;-webkit-appearance:none}
 .trip-sel-wrap select option{background:#1A1A4E;color:#fff}
-.hdr-actions{display:flex;gap:7px}
+.hdr-actions{display:flex;gap:7px;flex-shrink:0}
 .hdr-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .hdr-btn:hover{background:rgba(255,255,255,.25)}
-.trip-name{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.5px;position:relative;z-index:2}
-@media(min-width:900px){.trip-name{font-size:38px;}}
+.trip-name{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;line-height:1.1;position:relative;z-index:2}
+@media(min-width:900px){.trip-name{font-size:36px}}
 .trip-name em{color:var(--gold);font-style:normal}
-.trip-tagline{font-size:11px;color:rgba(255,255,255,.5);font-weight:500;margin-top:4px;margin-bottom:12px;position:relative;z-index:2}
-@media(min-width:900px){.trip-tagline{font-size:13px;margin-bottom:16px;}}
-/* config pills */
-.hdr-config{display:flex;gap:8px;margin-bottom:12px;position:relative;z-index:2;flex-wrap:wrap}
+.trip-tagline{font-size:11px;color:rgba(255,255,255,.5);font-weight:500;margin-top:4px;margin-bottom:10px;position:relative;z-index:2}
+.hdr-config{display:flex;gap:7px;margin-bottom:10px;position:relative;z-index:2;flex-wrap:wrap}
 @media(min-width:900px){.hdr-config{display:none}}
-.cfg-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:7px 13px;cursor:pointer;transition:all .2s}
+.cfg-pill{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:6px 12px;cursor:pointer;transition:all .2s}
 .cfg-pill:hover{background:rgba(255,255,255,.2)}
-.cfg-pill i{font-size:11px;color:var(--gold)}
+.cfg-pill i{font-size:10px;color:var(--gold)}
 .cfg-pill span{font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
-.cfg-pill.confirmed{background:rgba(0,168,150,.2);border-color:rgba(0,168,150,.5)}
 .cfg-pill.confirmed i{color:var(--teal2)}
-/* desktop config pills */
-.hdr-config-desktop .cfg-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
-/* stats */
-.hdr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:0;position:relative;z-index:2}
+.hdr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:0;position:relative;z-index:2}
 @media(min-width:900px){.hdr-stats{display:none}}
-.sbox{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;text-align:center}
-.sl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:4px}
-.sv{font-size:16px;font-weight:900;color:#fff}
-.sv.coral{color:var(--coral2)}.sv.teal{color:var(--teal2)}.sv.gold{color:var(--gold)}
-/* skyline */
+.sbox{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:9px 10px;text-align:center}
+.sl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:3px}
+.sv{font-size:15px;font-weight:900;color:#fff}
+.sv.coral{color:#FF8C5A}.sv.teal{color:#02C9B5}.sv.gold{color:var(--gold)}
 .skyline{display:block;width:100%;position:relative;z-index:1;margin-top:10px}
-@media(min-width:900px){.skyline{margin-top:18px}}
+@media(min-width:900px){.skyline{margin-top:16px}}
 
-/* ══════════════════════════════════════════
-   TABS (mobile only)
-══════════════════════════════════════════ */
+/* ── TABS (mobile) ── */
 .tabs{display:flex;background:#fff;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:20;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.tab{flex:1;padding:13px 4px 11px;border:none;background:transparent;color:var(--ink3);font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:4px}
-.tab i{font-size:16px}
+.tab{flex:1;padding:12px 4px 10px;border:none;background:transparent;color:var(--ink3);font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tab i{font-size:15px}
 .tab.active{color:var(--coral);border-bottom-color:var(--coral)}
-
 @keyframes fadeUp{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* ══════════════════════════════════════════
-   TIMELINE
-══════════════════════════════════════════ */
-.tl-item{display:flex;gap:12px;margin-bottom:0}
-.tl-left{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0}
-.day-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0}
+/* ── TIMELINE ── */
+.tl-wrap{position:relative}
+/* insert button between days */
+.insert-zone{display:flex;align-items:center;gap:8px;padding:2px 0;opacity:0;transition:opacity .2s;height:28px}
+.insert-zone:hover{opacity:1}
+.insert-zone-line{flex:1;height:1px;background:var(--border)}
+.insert-btn{width:24px;height:24px;border-radius:50%;border:2px solid var(--teal);background:#fff;color:var(--teal);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.insert-btn:hover{background:var(--teal);color:#fff}
+.tl-item{display:flex;gap:11px}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.day-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
 .day-dot.est{background:linear-gradient(135deg,#E8F8F7,#C8F0EC);color:var(--teal);border:2px solid var(--teal2)}
 .day-dot.trsl{background:linear-gradient(135deg,#FFF3E4,#FFE0C8);color:var(--coral);border:2px solid var(--coral2)}
-.day-dot.flight-day{background:linear-gradient(135deg,#EEE8FF,#D8CCFF);color:var(--violet);border:2px solid #9B72E8}
-.day-dot.return-day{background:linear-gradient(135deg,#FFE8F0,#FFCCDD);color:var(--rose);border:2px solid #FF6BA8}
+.day-dot.fd{background:linear-gradient(135deg,#EEE8FF,#D8CCFF);color:var(--violet);border:2px solid #9B72E8}
+.day-dot.rd{background:linear-gradient(135deg,#FFE8F0,#FFCCDD);color:var(--rose);border:2px solid #FF6BA8}
 .tl-line{width:2px;flex-grow:1;min-height:8px;background:linear-gradient(to bottom,var(--border),transparent);margin:3px 0}
-.tl-card{flex:1;background:#fff;border-radius:16px;padding:12px 14px;margin-bottom:10px;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
-@media(min-width:900px){.tl-card{border-radius:14px;padding:14px 16px}}
+.tl-card{flex:1;background:#fff;border-radius:15px;padding:12px 14px;margin-bottom:4px;border:1px solid var(--border);box-shadow:var(--shadow);transition:box-shadow .15s}
 .tl-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
-.tl-card.flight-card{border-left:4px solid var(--violet);background:linear-gradient(135deg,#FDFCFF,#F8F5FF)}
-.tl-card.return-card{border-left:4px solid var(--rose);background:linear-gradient(135deg,#FFF8FB,#FFF0F5)}
-.tl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:3px}
-.city-lbl{font-size:15px;font-weight:800;color:var(--ink);flex:1;line-height:1.2}
-@media(min-width:900px){.city-lbl{font-size:16px}}
-.cost-badge{font-size:11px;font-weight:800;border-radius:8px;padding:3px 9px;white-space:nowrap;flex-shrink:0}
+.tl-card.fc{border-left:4px solid var(--violet);background:linear-gradient(135deg,#FDFCFF,#F8F5FF)}
+.tl-card.rc{border-left:4px solid var(--rose);background:linear-gradient(135deg,#FFF8FB,#FFF0F5)}
+.tl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:3px}
+.city-lbl{font-size:14px;font-weight:800;color:var(--ink);flex:1;line-height:1.2}
+@media(min-width:900px){.city-lbl{font-size:15px}}
+.cost-badge{font-size:11px;font-weight:800;border-radius:7px;padding:2px 8px;white-space:nowrap;flex-shrink:0}
 .cost-badge.est{background:#E8F8F7;color:var(--teal)}
 .cost-badge.trsl{background:#FFF3E4;color:var(--coral)}
 .type-meta{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
 .type-meta.est{color:var(--teal)}.type-meta.trsl{color:var(--coral)}
-.type-meta.flight-lbl{color:var(--violet)}.type-meta.return-lbl{color:var(--rose)}
-.medio-chip{display:inline-flex;align-items:center;gap:3px;background:#F5F0FF;color:var(--violet);border-radius:5px;padding:1px 7px;font-size:9px;font-weight:700;margin-left:5px}
+.type-meta.fd{color:var(--violet)}.type-meta.rd{color:var(--rose)}
+.medio-chip{display:inline-flex;align-items:center;background:#F5F0FF;color:var(--violet);border-radius:5px;padding:1px 6px;font-size:9px;font-weight:700;margin-left:4px}
 .day-date-lbl{font-size:9px;color:var(--ink4);font-weight:600}
-.notas{font-size:11px;color:var(--ink3);line-height:1.5;margin-top:4px;margin-bottom:7px;padding-top:4px;border-top:1px solid var(--border)}
-.card-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:6px}
-.search-links{display:flex;gap:5px;flex-wrap:wrap;flex:1}
-.slink{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;border-radius:8px;padding:5px 9px;text-decoration:none;border:1.5px solid;cursor:pointer;transition:all .18s;white-space:nowrap;text-transform:uppercase;letter-spacing:.4px}
+/* sub-items */
+.subitems{margin-top:6px;border-top:1px solid var(--border);padding-top:6px;display:flex;flex-direction:column;gap:4px}
+.subitem{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--cream);border-radius:8px;border:1px solid var(--border)}
+.subitem-icon{font-size:13px;flex-shrink:0;width:20px;text-align:center}
+.subitem-desc{flex:1;font-size:12px;font-weight:600;color:var(--ink2)}
+.subitem-monto{font-size:12px;font-weight:800;color:var(--ink);white-space:nowrap}
+.subitem-mon{font-size:9px;color:var(--ink3);margin-left:2px}
+.subitem-btns{display:flex;gap:3px;flex-shrink:0}
+.subitem-btn{width:22px;height:22px;border:none;background:none;border-radius:5px;cursor:pointer;color:var(--ink4);font-size:9px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.subitem-btn:hover{background:#FFE8E8;color:#E53E3E}
+.subitem-btn.edit:hover{background:#EEF2FF;color:var(--violet)}
+.dup-warn{font-size:10px;color:var(--amber);background:#FFFBEB;border:1px solid #FDE68A;border-radius:7px;padding:4px 8px;margin-top:5px;display:flex;align-items:center;gap:5px}
+/* card footer */
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:6px;flex-wrap:wrap}
+.search-links{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+.slink{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:800;border-radius:7px;padding:4px 8px;text-decoration:none;border:1.5px solid;cursor:pointer;transition:all .18s;white-space:nowrap;text-transform:uppercase;letter-spacing:.4px}
 .sl-tc{background:#FFF5ED;color:#E85D04;border-color:#FFB380}.sl-tc:hover{background:#FFE8D6}
 .sl-sky{background:#EDF6FF;color:#0066CC;border-color:#99CCFF}.sl-sky:hover{background:#D6EEFF}
 .sl-gf{background:#F0FFF4;color:#137333;border-color:#86EFAC}.sl-gf:hover{background:#DCFCE7}
@@ -176,119 +171,121 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
 .sl-triv{background:#FFF8E8;color:#B45309;border-color:#FBBF24}.sl-triv:hover{background:#FEF3C7}
 .sl-omio{background:#F5F0FF;color:#6D28D9;border-color:#C4B5FD}.sl-omio:hover{background:#EDE9FE}
 .sl-tl{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}.sl-tl:hover{background:#DBEAFE}
-.del-btn{width:28px;height:28px;border:none;background:var(--cream);border-radius:8px;color:var(--ink4);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-.del-btn:hover{background:#FFE8E8;color:#E53E3E}
+.card-actions{display:flex;gap:5px;flex-shrink:0}
+.ca-btn{width:28px;height:28px;border:none;border-radius:8px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.ca-btn.edit{background:#EEF2FF;color:var(--violet)}.ca-btn.edit:hover{background:#DDD6FE}
+.ca-btn.del{background:var(--cream);color:var(--ink4)}.ca-btn.del:hover{background:#FFE8E8;color:#E53E3E}
+.ca-btn.up,.ca-btn.dn{background:var(--cream);color:var(--ink4)}.ca-btn.up:hover,.ca-btn.dn:hover{background:#E8F8F7;color:var(--teal)}
+.ca-btn.add-sub{background:#E8F8F7;color:var(--teal)}.ca-btn.add-sub:hover{background:#C8F0EC}
 
-/* ══════════════════════════════════════════
-   GASTOS
-══════════════════════════════════════════ */
-.cat-section{margin-bottom:16px}
-.cat-hdr{display:flex;justify-content:space-between;align-items:center;padding:6px 0 8px;margin-bottom:6px;border-bottom:2px solid var(--border)}
-.cat-title{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3)}
-.cat-emoji{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.cat-subtotal{font-size:14px;font-weight:900;color:var(--ink2)}
-.g-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.g-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+/* ── GASTOS ── */
+.cat-section{margin-bottom:14px}
+.cat-hdr{display:flex;justify-content:space-between;align-items:center;padding:5px 0 7px;margin-bottom:5px;border-bottom:2px solid var(--border)}
+.cat-title{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3)}
+.cat-emoji{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cat-sub{font-size:13px;font-weight:900;color:var(--ink2)}
+.g-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:9px 11px;margin-bottom:5px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.g-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:1px}
 .g-meta{font-size:10px;color:var(--ink3)}
-.g-del{background:none;border:none;color:var(--ink4);font-size:12px;cursor:pointer;padding:5px;transition:color .2s;flex-shrink:0}.g-del:hover{color:#E53E3E}
+.g-btns{display:flex;gap:4px;flex-shrink:0}
+.g-btn{width:26px;height:26px;border:none;border-radius:7px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.g-btn.edit{background:#EEF2FF;color:var(--violet)}.g-btn.edit:hover{background:#DDD6FE}
+.g-btn.del{background:var(--cream);color:var(--ink4)}.g-btn.del:hover{background:#FFE8E8;color:#E53E3E}
 
-/* ══════════════════════════════════════════
-   RESUMEN (mobile only - desktop uses sidebar)
-══════════════════════════════════════════ */
-.big-total{background:linear-gradient(135deg,#0F3460,#1A1A4E);border-radius:20px;padding:24px 20px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
-.big-total::before{content:'✈';position:absolute;font-size:120px;opacity:.04;right:-20px;top:-20px}
-.big-total-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.4);margin-bottom:10px}
-.big-total-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#fff;line-height:1}
-.big-total-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:8px}
-.big-total-season{display:inline-block;background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.3);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;color:var(--gold);margin-top:10px}
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.res-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.res-e{font-size:22px;margin-bottom:6px}
-.res-n{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink3);margin-bottom:3px}
-.res-v{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink2)}
-.res-pp{font-size:10px;color:var(--ink4);margin-top:2px}
-.cities-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.cities-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:10px}
-.city-chip-m{display:inline-flex;background:var(--warm);border:1px solid var(--border);border-radius:20px;padding:5px 12px;margin:3px;font-size:12px;font-weight:700;color:var(--ink2)}
-.ai-card{background:linear-gradient(135deg,#F5F0FF,#EDF6FF);border:1.5px solid #C4B5FD;border-radius:16px;padding:16px;margin-bottom:14px}
-.ai-btn{width:100%;background:linear-gradient(135deg,var(--violet),#5B21B6);color:#fff;border:none;border-radius:12px;padding:15px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
-.ai-btn:hover{opacity:.88;transform:translateY(-1px)}.ai-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.ai-result{margin-top:12px;display:none}.ai-result.show{display:block}
-.ai-result-ttl{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--violet);margin-bottom:8px}
-.ai-result-body{font-size:12px;color:var(--ink2);line-height:1.8}
-.ai-loader{display:flex;align-items:center;gap:8px;color:var(--ink3);font-size:12px}
-.ai-loader::before{content:'';width:14px;height:14px;border:2px solid var(--ink4);border-top-color:var(--violet);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+/* ── RESUMEN (mobile) ── */
+.big-total{background:linear-gradient(135deg,#0F3460,#1A1A4E);border-radius:18px;padding:22px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.big-total::before{content:'✈';position:absolute;font-size:110px;opacity:.04;right:-15px;top:-15px}
+.bt-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.4);margin-bottom:8px}
+.bt-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:900;color:#fff;line-height:1}
+.bt-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:6px}
+.bt-season{display:inline-block;background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.3);border-radius:20px;padding:3px 11px;font-size:10px;font-weight:700;color:var(--gold);margin-top:8px}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.res-card{background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:13px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.rc-e{font-size:20px;margin-bottom:5px}.rc-n{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink3);margin-bottom:2px}
+.rc-v{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink2)}
+.rc-pp{font-size:10px;color:var(--ink4);margin-top:2px}
+.cities-card{background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:13px;margin-bottom:10px}
+.cities-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:8px}
+.city-chm{display:inline-flex;background:var(--warm);border:1px solid var(--border);border-radius:20px;padding:4px 11px;margin:3px;font-size:11px;font-weight:700;color:var(--ink2)}
+.ai-card{background:linear-gradient(135deg,#F5F0FF,#EDF6FF);border:1.5px solid #C4B5FD;border-radius:15px;padding:14px;margin-bottom:12px}
+.ai-btn{width:100%;background:linear-gradient(135deg,var(--violet),#5B21B6);color:#fff;border:none;border-radius:11px;padding:14px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
+.ai-btn:hover{opacity:.88}.ai-btn:disabled{opacity:.5;cursor:not-allowed}
+.ai-result{margin-top:10px;display:none}.ai-result.show{display:block}
+.ai-result-ttl{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--violet);margin-bottom:7px}
+.ai-result-body{font-size:11px;color:var(--ink2);line-height:1.8}
+/* io mobile */
+.io-row{display:flex;gap:8px;margin-bottom:12px}
+.io-btn{flex:1;background:#fff;border:1.5px solid var(--border);border-radius:11px;padding:11px 8px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;color:var(--ink3);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.io-btn:hover{border-color:var(--coral);color:var(--coral)}
+.ai-loader{display:flex;align-items:center;gap:8px;color:var(--ink3);font-size:11px}
+.ai-loader::before{content:'';width:13px;height:13px;border:2px solid var(--ink4);border-top-color:var(--violet);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ══════════════════════════════════════════
-   FAB (mobile only)
-══════════════════════════════════════════ */
-.fab-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);width:calc(100vw - 32px);max-width:398px;display:flex;gap:8px;z-index:30}
-.fab{flex:1;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:16px;padding:17px 14px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 24px rgba(255,107,53,.35);transition:all .2s}
+/* ── FAB ── */
+.fab-wrap{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);width:calc(100vw - 28px);max-width:402px;display:flex;gap:8px;z-index:30}
+.fab{flex:1;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:15px;padding:16px 14px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 6px 22px rgba(255,107,53,.32);transition:all .2s}
 .fab:hover{transform:translateY(-2px)}.fab:active{transform:none}
-.fab.sec{flex:0;padding:17px 18px;background:#fff;color:var(--ink3);border:1.5px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.fab.sec:hover{color:#E53E3E;border-color:#FECACA}
+.fab.sec{flex:0;padding:16px 17px;background:#fff;color:var(--ink3);border:1.5px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,.07)}
+.fab.sec:hover{color:var(--coral);border-color:var(--coral2)}
 
-/* ══════════════════════════════════════════
-   MODALS (shared)
-══════════════════════════════════════════ */
+/* ── MODALS ── */
 .ov{position:fixed;inset:0;background:rgba(26,26,46,.65);backdrop-filter:blur(8px);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .ov.open{display:flex}
-@media(min-width:900px){
-  .ov{align-items:center}
-  .sheet{border-radius:20px;max-width:520px;max-height:85vh}
-}
-.sheet{background:var(--cream);width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:20px 20px 40px;max-height:92vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(.32,0,.67,0) forwards}
+@media(min-width:900px){.ov{align-items:center}.sheet{border-radius:18px;max-width:560px;max-height:88vh}}
+.sheet{background:var(--cream);width:100%;max-width:430px;border-radius:22px 22px 0 0;padding:20px 20px 38px;max-height:92vh;overflow-y:auto;animation:slideUp .28s cubic-bezier(.32,0,.67,0) forwards}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@media(min-width:900px){@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}}
-.sheet-handle{width:36px;height:4px;background:var(--ink4);border-radius:2px;margin:0 auto 16px;opacity:.3}
+@media(min-width:900px){@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}}
+.sheet-handle{width:34px;height:4px;background:var(--ink4);border-radius:2px;margin:0 auto 14px;opacity:.3}
 @media(min-width:900px){.sheet-handle{display:none}}
-.sheet-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:18px}
-.fg{margin-bottom:14px}
-.fl{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:6px;display:block}
-.fi,.fsel,.fta{width:100%;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.sheet-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px}
+.fg{margin-bottom:12px}
+.fl{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.9px;color:var(--ink3);margin-bottom:5px;display:block}
+.fi,.fsel,.fta{width:100%;background:#fff;border:1.5px solid var(--border);border-radius:11px;padding:11px 13px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s;-webkit-appearance:none}
 .fi:focus,.fsel:focus,.fta:focus{border-color:var(--coral)}
-.fsel option{background:#fff}.fta{resize:none;height:72px}
+.fsel option{background:#fff}.fta{resize:none;height:65px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .frow3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
-.type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.tt-opt{background:#fff;border:2px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .2s}
-.tt-opt i{font-size:18px;color:var(--ink4)}.tt-opt .ttl{font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
+.type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.tt-opt{background:#fff;border:2px solid var(--border);border-radius:11px;padding:11px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .2s}
+.tt-opt i{font-size:17px;color:var(--ink4)}.tt-opt .ttl{font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
 .tt-opt.on.est{border-color:var(--teal);background:#E8F8F7}.tt-opt.on.est i,.tt-opt.on.est .ttl{color:var(--teal)}
 .tt-opt.on.trsl{border-color:var(--coral);background:#FFF3E4}.tt-opt.on.trsl i,.tt-opt.on.trsl .ttl{color:var(--coral)}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}
-.copt{background:#fff;border:2px solid var(--border);border-radius:10px;padding:8px 4px;cursor:pointer;text-align:center;transition:all .2s}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.copt{background:#fff;border:2px solid var(--border);border-radius:9px;padding:7px 4px;cursor:pointer;text-align:center;transition:all .2s}
 .copt.on{border-color:var(--coral);background:#FFF3E4}
-.copt .ce{font-size:18px;margin-bottom:3px;display:block}
+.copt .ce{font-size:17px;margin-bottom:2px;display:block}
 .copt .cn{font-size:8px;font-weight:800;text-transform:uppercase;color:var(--ink3);line-height:1.1}.copt.on .cn{color:var(--coral)}
-.tog-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.tog-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1.5px solid var(--border);border-radius:11px;padding:11px 13px;margin-bottom:12px}
 .tog-lbl{font-size:13px;font-weight:700;color:var(--ink2)}
-.tog{width:44px;height:24px;background:var(--ink4);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
-.tog.on{background:var(--coral)}.tog::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}.tog.on::after{transform:translateX(20px)}
-.pp-hint{font-size:11px;color:var(--ink3);margin-bottom:12px;display:none;padding:8px 12px;background:#FFF3E4;border-radius:8px}
-.bsave{width:100%;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:13px;padding:16px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;margin-top:6px;transition:opacity .2s;box-shadow:0 4px 16px rgba(255,107,53,.3)}.bsave:hover{opacity:.88}
-.bcancel{width:100%;background:transparent;color:var(--ink3);border:1.5px solid var(--border);border-radius:13px;padding:13px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:8px}
-.season-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.month-pill{background:#fff;border:2px solid var(--border);border-radius:10px;padding:9px 6px;text-align:center;cursor:pointer;transition:all .2s;font-size:11px;font-weight:800;color:var(--ink3)}
+.tog{width:42px;height:23px;background:var(--ink4);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.tog.on{background:var(--coral)}.tog::after{content:'';position:absolute;width:19px;height:19px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}.tog.on::after{transform:translateX(19px)}
+.pp-hint{font-size:11px;color:var(--ink3);margin-bottom:10px;display:none;padding:7px 11px;background:#FFF3E4;border-radius:8px}
+.bsave{width:100%;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:12px;padding:15px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;margin-top:5px;transition:opacity .2s;box-shadow:0 4px 14px rgba(255,107,53,.28)}.bsave:hover{opacity:.88}
+.bcancel{width:100%;background:transparent;color:var(--ink3);border:1.5px solid var(--border);border-radius:12px;padding:12px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;margin-top:7px}
+.season-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.month-pill{background:#fff;border:2px solid var(--border);border-radius:9px;padding:8px 5px;text-align:center;cursor:pointer;transition:all .2s;font-size:11px;font-weight:800;color:var(--ink3)}
 .month-pill.on{border-color:var(--gold);background:#FFFBEB;color:#92400E}
-.nights-note{background:#E8F8F7;border-radius:8px;padding:8px 12px;font-size:11px;font-weight:700;color:var(--teal);margin-bottom:14px;display:none}
+.nights-note{background:#E8F8F7;border-radius:8px;padding:7px 11px;font-size:11px;font-weight:700;color:var(--teal);margin-bottom:12px;display:none}
 .ov-c{position:fixed;inset:0;background:rgba(26,26,46,.7);backdrop-filter:blur(10px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .ov-c.open{display:flex}
-.cbox{background:var(--cream);border-radius:20px;padding:24px;width:100%;max-width:380px;border:1.5px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.cbox-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:16px;color:var(--ink)}
-.empty{text-align:center;padding:44px 20px;color:var(--ink4)}
-.empty i{font-size:40px;margin-bottom:12px;display:block;opacity:.2}
+.cbox{background:var(--cream);border-radius:18px;padding:22px;width:100%;max-width:380px;border:1.5px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.cbox-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:14px;color:var(--ink)}
+.empty{text-align:center;padding:40px 18px;color:var(--ink4)}
+.empty i{font-size:38px;margin-bottom:10px;display:block;opacity:.2}
 .empty p{font-size:13px;line-height:1.6}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--ink4);border-radius:2px}
+/* subitem type icons */
+.si-type-sel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.si-type-btn{background:#fff;border:2px solid var(--border);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.si-type-btn.on{border-color:var(--coral);background:#FFF3E4;color:var(--coral)}
 </style>
 </head>
 <body>
 
-<!-- ════ HEADER ════ -->
+<!-- HEADER -->
 <header class="hdr">
   <div class="hdr-stars" id="starsContainer"></div>
   <div class="hdr-glow"></div>
-
   <div class="hdr-top">
     <div class="trip-sel-wrap">
       <select id="tripSel" onchange="switchTrip(this.value)"></select>
@@ -298,272 +295,239 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
       <div class="hdr-btn" onclick="confirmDeleteTrip()" title="Eliminar viaje"><i class="fa-solid fa-trash-can"></i></div>
     </div>
   </div>
-
   <div class="trip-name" id="tripNameHdr">Viaje <em>Final</em></div>
   <div class="trip-tagline" id="tripTagline">Configurá temporada y duración</div>
-
-  <!-- Mobile config pills -->
+  <!-- mobile pills -->
   <div class="hdr-config">
-    <div class="cfg-pill" onclick="openSeasonModal()" id="seasonPill">
-      <i class="fa-regular fa-calendar"></i><span id="seasonLabel">Temporada</span>
-    </div>
-    <div class="cfg-pill" onclick="openDurationModal()" id="durPill">
-      <i class="fa-solid fa-moon"></i><span id="durLabel">Duración</span>
-    </div>
-    <div class="cfg-pill confirmed" onclick="openConfirmDateModal()" id="confirmedPill" style="display:none">
-      <i class="fa-solid fa-check-circle"></i><span id="confirmedLabel">Confirmado</span>
-    </div>
+    <div class="cfg-pill" onclick="openSeasonModal()"><i class="fa-regular fa-calendar"></i><span id="seasonLabel">Temporada</span></div>
+    <div class="cfg-pill" onclick="openDurationModal()"><i class="fa-solid fa-moon"></i><span id="durLabel">Duración</span></div>
+    <div class="cfg-pill confirmed" onclick="openConfirmDateModal()" id="confirmedPill" style="display:none"><i class="fa-solid fa-check-circle"></i><span id="confirmedLabel">Confirmado</span></div>
   </div>
-
-  <!-- Mobile stats -->
   <div class="hdr-stats">
     <div class="sbox"><div class="sl">Total</div><div class="sv coral" id="svTotal">$—</div></div>
     <div class="sbox"><div class="sl">Por persona</div><div class="sv teal" id="svPP">$—</div></div>
     <div class="sbox"><div class="sl">Personas</div><div class="sv gold" id="svPax" style="cursor:pointer" onclick="togglePax()">2 👤</div></div>
   </div>
-
-  <!-- Desktop config pills (inside header) -->
+  <!-- desktop pills -->
   <div class="hdr-config-desktop">
-    <div class="cfg-pill" onclick="openSeasonModal()">
-      <i class="fa-regular fa-calendar"></i><span id="seasonLabelD">Temporada</span>
-    </div>
-    <div class="cfg-pill" onclick="openDurationModal()">
-      <i class="fa-solid fa-moon"></i><span id="durLabelD">Duración</span>
-    </div>
-    <div class="cfg-pill confirmed" onclick="openConfirmDateModal()" id="confirmedPillD" style="display:none">
-      <i class="fa-solid fa-check-circle"></i><span id="confirmedLabelD">Confirmado</span>
-    </div>
-    <div class="cfg-pill" onclick="togglePax()" style="cursor:pointer">
-      <i class="fa-solid fa-user-group"></i><span id="paxLabelD">2 personas</span>
-    </div>
+    <div class="cfg-pill" onclick="openSeasonModal()"><i class="fa-regular fa-calendar"></i><span id="seasonLabelD">Temporada</span></div>
+    <div class="cfg-pill" onclick="openDurationModal()"><i class="fa-solid fa-moon"></i><span id="durLabelD">Duración</span></div>
+    <div class="cfg-pill confirmed" onclick="openConfirmDateModal()" id="confirmedPillD" style="display:none"><i class="fa-solid fa-check-circle"></i><span id="confirmedLabelD">Confirmado</span></div>
+    <div class="cfg-pill" onclick="togglePax()" style="cursor:pointer"><i class="fa-solid fa-user-group"></i><span id="paxLabelD">2 personas</span></div>
   </div>
-
-  <!-- SKYLINE -->
+  <!-- Skyline -->
   <svg class="skyline" viewBox="0 0 860 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-    <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#FFFAF4" stop-opacity="0"/>
-        <stop offset="80%" stop-color="#FFFAF4" stop-opacity="1"/>
-      </linearGradient>
-    </defs>
-    <!-- Eiffel Tower -->
-    <g fill="rgba(255,255,255,0.13)" transform="translate(70,8)">
-      <polygon points="22,72 17,42 12,22 7,10 2,2 -2,2 -7,10 -12,22 -17,42 -22,72"/>
-      <rect x="-25" y="67" width="50" height="5" rx="1"/>
-      <rect x="-16" y="37" width="32" height="3" rx="1"/>
-      <rect x="-7" y="19" width="14" height="3" rx="1"/>
-      <rect x="-2" y="0" width="4" height="10"/>
-    </g>
-    <!-- Big Ben -->
-    <g fill="rgba(255,255,255,0.11)" transform="translate(220,14)">
-      <rect x="-13" y="20" width="26" height="52" rx="2"/>
-      <rect x="-11" y="10" width="22" height="14" rx="1"/>
-      <rect x="-7" y="2" width="14" height="11" rx="1"/>
-      <polygon points="-9,2 0,-9 9,2"/>
-      <rect x="-15" y="52" width="30" height="4" rx="1"/>
-    </g>
-    <!-- Colosseum -->
-    <g fill="rgba(255,255,255,0.11)" transform="translate(430,18)">
-      <rect x="-55" y="30" width="110" height="44" rx="3"/>
-      <rect x="-55" y="18" width="110" height="16" rx="2"/>
-      <ellipse cx="0" cy="18" rx="22" ry="13"/>
-      <rect x="-16" y="18" width="32" height="56" rx="1"/>
-      <rect x="-55" y="43" width="110" height="3"/>
-      <rect x="-55" y="57" width="110" height="3"/>
-      <rect x="-35" y="18" width="4" height="56"/>
-      <rect x="31" y="18" width="4" height="56"/>
-    </g>
-    <!-- Cristo Redentor -->
-    <g fill="rgba(255,255,255,0.11)" transform="translate(640,14)">
-      <rect x="-4" y="0" width="8" height="68" rx="3"/>
-      <rect x="-26" y="17" width="52" height="7" rx="4"/>
-      <circle cx="0" cy="-5" r="7"/>
-    </g>
-    <!-- Pyramids -->
-    <g fill="rgba(255,255,255,0.11)" transform="translate(790,18)">
-      <polygon points="0,0 -36,64 36,64"/>
-      <polygon points="38,8 18,64 58,64"/>
-      <rect x="-38" y="62" width="100" height="5" rx="1"/>
-    </g>
-    <!-- Stars -->
-    <circle cx="150" cy="10" r="1.5" fill="rgba(255,255,255,.5)"/>
-    <circle cx="320" cy="6" r="1" fill="rgba(255,255,255,.4)"/>
-    <circle cx="530" cy="8" r="1.5" fill="rgba(255,255,255,.6)"/>
-    <circle cx="720" cy="5" r="1" fill="rgba(255,255,255,.3)"/>
-    <circle cx="40" cy="4" r="1" fill="rgba(255,255,255,.45)"/>
-    <circle cx="860" cy="12" r="1" fill="rgba(255,255,255,.3)"/>
-    <!-- Fade to cream -->
-    <rect x="0" y="58" width="860" height="32" fill="url(#g)"/>
-    <rect x="0" y="82" width="860" height="8" fill="#FFFAF4"/>
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFFAF4" stop-opacity="0"/><stop offset="80%" stop-color="#FFFAF4" stop-opacity="1"/></linearGradient></defs>
+    <g fill="rgba(255,255,255,0.13)" transform="translate(70,8)"><polygon points="22,72 17,42 12,22 7,10 2,2 -2,2 -7,10 -12,22 -17,42 -22,72"/><rect x="-25" y="67" width="50" height="5" rx="1"/><rect x="-16" y="37" width="32" height="3" rx="1"/><rect x="-7" y="19" width="14" height="3" rx="1"/><rect x="-2" y="0" width="4" height="10"/></g>
+    <g fill="rgba(255,255,255,0.11)" transform="translate(220,14)"><rect x="-13" y="20" width="26" height="52" rx="2"/><rect x="-11" y="10" width="22" height="14" rx="1"/><rect x="-7" y="2" width="14" height="11" rx="1"/><polygon points="-9,2 0,-9 9,2"/><rect x="-15" y="52" width="30" height="4" rx="1"/></g>
+    <g fill="rgba(255,255,255,0.11)" transform="translate(430,18)"><rect x="-55" y="30" width="110" height="44" rx="3"/><rect x="-55" y="18" width="110" height="16" rx="2"/><ellipse cx="0" cy="18" rx="22" ry="13"/><rect x="-16" y="18" width="32" height="56" rx="1"/><rect x="-55" y="43" width="110" height="3"/><rect x="-55" y="57" width="110" height="3"/><rect x="-35" y="18" width="4" height="56"/><rect x="31" y="18" width="4" height="56"/></g>
+    <g fill="rgba(255,255,255,0.11)" transform="translate(640,14)"><rect x="-4" y="0" width="8" height="68" rx="3"/><rect x="-26" y="17" width="52" height="7" rx="4"/><circle cx="0" cy="-5" r="7"/></g>
+    <g fill="rgba(255,255,255,0.11)" transform="translate(790,18)"><polygon points="0,0 -36,64 36,64"/><polygon points="38,8 18,64 58,64"/><rect x="-38" y="62" width="100" height="5" rx="1"/></g>
+    <circle cx="150" cy="10" r="1.5" fill="rgba(255,255,255,.5)"/><circle cx="320" cy="6" r="1" fill="rgba(255,255,255,.4)"/><circle cx="530" cy="8" r="1.5" fill="rgba(255,255,255,.6)"/><circle cx="720" cy="5" r="1" fill="rgba(255,255,255,.3)"/><circle cx="40" cy="4" r="1" fill="rgba(255,255,255,.45)"/>
+    <rect x="0" y="58" width="860" height="32" fill="url(#g)"/><rect x="0" y="82" width="860" height="8" fill="#FFFAF4"/>
   </svg>
 </header>
 
-<!-- ════ TABS (mobile) ════ -->
+<!-- TABS (mobile) -->
 <nav class="tabs">
   <button class="tab active" onclick="switchTab('ruta',this)"><i class="fa-solid fa-map-marked-alt"></i>Ruta</button>
   <button class="tab" onclick="switchTab('gastos',this)"><i class="fa-solid fa-wallet"></i>Gastos</button>
   <button class="tab" onclick="switchTab('resumen',this)"><i class="fa-solid fa-chart-pie"></i>Resumen</button>
 </nav>
 
-<!-- ════ MAIN CONTENT ════ -->
+<!-- MAIN -->
 <div class="main-area">
-
-  <!-- DESKTOP section: Ruta -->
   <div id="tc-ruta" class="tc active">
     <div class="section-hdr">
       <span class="section-title">✈ Itinerario</span>
-      <button class="add-btn" onclick="openAdd('day')"><i class="fa-solid fa-plus"></i> Agregar día</button>
+      <button class="add-btn" onclick="openDayModal(null,null)"><i class="fa-solid fa-plus"></i> Agregar día</button>
     </div>
     <div id="tlList"></div>
   </div>
-
   <div class="section-divider"></div>
-
-  <!-- DESKTOP section: Gastos -->
   <div id="tc-gastos" class="tc">
     <div class="section-hdr">
       <span class="section-title">💰 Gastos</span>
-      <button class="add-btn" onclick="openAdd('gasto')"><i class="fa-solid fa-plus"></i> Agregar gasto</button>
+      <button class="add-btn" onclick="openGastoModal(null)"><i class="fa-solid fa-plus"></i> Agregar gasto</button>
     </div>
     <div id="gastosList"></div>
   </div>
-
-  <!-- Mobile: Resumen tab (desktop uses sidebar) -->
-  <div id="tc-resumen" class="tc">
-    <div id="resContent"></div>
-  </div>
-
+  <div id="tc-resumen" class="tc"><div id="resContent"></div></div>
 </div>
 
-<!-- ════ SIDEBAR (desktop) ════ -->
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-total">
+  <div class="sb-total">
     <div class="sb-lbl">Total estimado</div>
     <div class="sb-num" id="sbTotal">$—</div>
     <div class="sb-sub" id="sbSub">— por persona</div>
     <div class="sb-season" id="sbSeason">Temporada a definir</div>
-    <button class="sb-confirm-btn" id="sbConfirmBtn" onclick="openConfirmDateModal()">📌 ¿Encontraste el vuelo? Confirmá la fecha</button>
+    <button class="sb-btn confirm" id="sbConfirmBtn" onclick="openConfirmDateModal()">📌 ¿Encontraste el vuelo? Confirmá la fecha</button>
+  </div>
+  <div class="sb-io">
+    <button class="sb-io-btn" onclick="exportJSON()"><i class="fa-solid fa-download"></i> Exportar</button>
+    <button class="sb-io-btn" onclick="importJSON()"><i class="fa-solid fa-upload"></i> Importar</button>
   </div>
   <div class="sb-breakdown" id="sbBreakdown"></div>
   <div class="sb-cities" id="sbCities"></div>
   <button class="sb-ai-btn" id="sbAiBtn" onclick="runAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA</button>
-  <div class="sb-ai-result" id="sbAiResult"><div class="sb-ai-result-body" id="sbAiBody"></div></div>
+  <div class="sb-ai-res" id="sbAiRes"></div>
 </aside>
 
 <!-- FABs (mobile) -->
 <div class="fab-wrap" id="fabWrap">
-  <button class="fab" onclick="openAdd(null)"><i class="fa-solid fa-plus"></i><span id="fabTxt">Agregar Día</span></button>
+  <button class="fab" onclick="openFabAdd()"><i class="fa-solid fa-plus"></i><span id="fabTxt">Agregar Día</span></button>
   <button class="fab sec" onclick="openSeasonModal()"><i class="fa-regular fa-calendar"></i></button>
 </div>
 
-<!-- ════ MODAL: SEASON ════ -->
+<!-- MODAL: SEASON -->
 <div class="ov" id="seasonOv" onclick="if(event.target===this)closeSeasonModal()">
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">¿Cuándo viajás? 🌍</div>
-    <label class="fl">Temporada — seleccioná los meses</label>
+    <label class="fl">Temporada</label>
     <div class="season-grid" id="seasonGrid"></div>
     <label class="fl">Días de estadía <span style="color:var(--ink3);font-weight:500;text-transform:none;letter-spacing:0">(el número que ponés en Turismo City)</span></label>
-    <input type="number" id="diasInput" class="fi" placeholder="Ej: 16" min="2" max="60" oninput="updateNightsNote()">
+    <input type="number" id="diasInput" class="fi" placeholder="Ej: 16" min="2" max="90" oninput="updateNightsNote()">
     <div class="nights-note" id="nightsNote"></div>
-    <div class="fg">
-      <label class="fl">Personas</label>
-      <select id="paxInput" class="fsel">
-        <option value="1">1 persona</option>
-        <option value="2" selected>2 personas</option>
-        <option value="3">3 personas</option>
-        <option value="4">4 personas</option>
-      </select>
+    <div class="fg"><label class="fl">Personas</label>
+      <select id="paxInput" class="fsel"><option value="1">1 persona</option><option value="2" selected>2 personas</option><option value="3">3 personas</option><option value="4">4 personas</option></select>
     </div>
-    <button class="bsave" onclick="saveSeason()">Guardar configuración</button>
+    <button class="bsave" onclick="saveSeason()">Guardar</button>
     <button class="bcancel" onclick="closeSeasonModal()">Cancelar</button>
   </div>
 </div>
 
-<!-- ════ MODAL: DURATION ════ -->
+<!-- MODAL: DURATION -->
 <div class="ov" id="durOv" onclick="if(event.target===this)closeDurModal()">
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">Días de estadía</div>
-    <p style="font-size:13px;color:var(--ink3);margin-bottom:14px;line-height:1.6">El número que ponés en Turismo City. Si vas a estar <strong>15 días paseando</strong>, poné <strong>16</strong> (incluye el día del vuelo de ida).</p>
-    <div class="fg"><label class="fl">Días de estadía</label><input type="number" id="diasInput2" class="fi" placeholder="Ej: 16" min="2" max="60" oninput="syncDias()"></div>
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:13px;line-height:1.6">El número que ponés en Turismo City. Si vas a estar <strong>15 días paseando</strong>, poné <strong>16</strong>.</p>
+    <div class="fg"><label class="fl">Días de estadía</label><input type="number" id="diasInput2" class="fi" placeholder="Ej: 16" min="2" max="90" oninput="syncDias()"></div>
     <div class="nights-note" id="nightsNote2"></div>
     <button class="bsave" onclick="saveDuration()">Guardar</button>
     <button class="bcancel" onclick="closeDurModal()">Cancelar</button>
   </div>
 </div>
 
-<!-- ════ MODAL: CONFIRM DATE ════ -->
+<!-- MODAL: CONFIRM DATE -->
 <div class="ov" id="confirmDateOv" onclick="if(event.target===this)document.getElementById('confirmDateOv').classList.remove('open')">
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">¡Vuelo confirmado! ✈️</div>
-    <p style="font-size:13px;color:var(--ink3);margin-bottom:16px;line-height:1.6">Ingresá la fecha real de salida y el itinerario se ancla desde el Día 1.</p>
-    <div class="fg"><label class="fl">Fecha de salida (Día 1 · vuelo de ida)</label><input type="date" id="confirmedDateInput" class="fi"></div>
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:14px;line-height:1.6">Ingresá la fecha real y el itinerario se ancla desde el Día 1.</p>
+    <div class="fg"><label class="fl">Fecha de salida (Día 1)</label><input type="date" id="confirmedDateInput" class="fi"></div>
     <button class="bsave" onclick="saveConfirmedDate()">Anclar itinerario</button>
     <div id="removeDateWrap" style="display:none"><button class="bcancel" onclick="removeConfirmedDate()">Quitar fecha confirmada</button></div>
     <button class="bcancel" onclick="document.getElementById('confirmDateOv').classList.remove('open')">Cancelar</button>
   </div>
 </div>
 
-<!-- ════ MODAL: ADD DAY / GASTO ════ -->
-<div class="ov" id="addOv" onclick="if(event.target===this)closeAdd()">
+<!-- MODAL: DAY -->
+<div class="ov" id="dayOv" onclick="if(event.target===this)closeDayModal()">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <div id="fDay">
-      <div class="sheet-title">Agregar al Itinerario</div>
-      <label class="fl">Tipo de entrada</label>
-      <div class="type-toggle">
-        <div class="tt-opt est on" id="ttEst" onclick="setType('est')"><i class="fa-solid fa-hotel"></i><span class="ttl">Estadía</span></div>
-        <div class="tt-opt trsl" id="ttTrsl" onclick="setType('trsl')"><i class="fa-solid fa-plane-departure"></i><span class="ttl">Traslado</span></div>
-      </div>
-      <div class="fg"><label class="fl" id="lCiudad">Ciudad</label><input id="iCiudad" class="fi" placeholder="Ej: París"></div>
-      <div class="fg" id="gMedio" style="display:none">
-        <label class="fl">Medio de transporte</label>
-        <select id="iMedio" class="fsel"><option value="vuelo">✈️ Vuelo</option><option value="tren">🚄 Tren</option><option value="eurostar">🚅 Eurostar</option><option value="bus">🚌 Bus</option><option value="uber">🚗 Uber</option><option value="ferry">⛴️ Ferry</option></select>
-      </div>
-      <div class="frow">
-        <div class="fg"><label class="fl" id="lCosto">Hospedaje (esa noche)</label><input id="iCosto" class="fi" type="number" placeholder="0"></div>
-        <div class="fg"><label class="fl">Moneda</label><select id="iMoneda" class="fsel"><option>USD</option><option>EUR</option><option>GBP</option></select></div>
-      </div>
-      <div class="fg"><label class="fl">Notas / Actividades</label><textarea id="iNotas" class="fta" placeholder="Ej: Louvre, Torre Eiffel..."></textarea></div>
-      <button class="bsave" onclick="saveDay()">Guardar en la Ruta</button>
-      <button class="bcancel" onclick="closeAdd()">Cancelar</button>
+    <div class="sheet-title" id="dayModalTitle">Agregar Día</div>
+    <label class="fl">Tipo</label>
+    <div class="type-toggle">
+      <div class="tt-opt est on" id="ttEst" onclick="setType('est')"><i class="fa-solid fa-hotel"></i><span class="ttl">Estadía</span></div>
+      <div class="tt-opt trsl" id="ttTrsl" onclick="setType('trsl')"><i class="fa-solid fa-plane-departure"></i><span class="ttl">Traslado</span></div>
     </div>
-    <div id="fGasto" style="display:none">
-      <div class="sheet-title">Agregar Gasto</div>
-      <label class="fl">Categoría</label>
-      <div class="cat-grid" id="catGrid"></div>
-      <div class="fg"><label class="fl">Descripción</label><input id="gDesc" class="fi" placeholder="Ej: Paris Pass 3 días By Go City"></div>
-      <div class="frow3">
-        <div class="fg"><label class="fl">Monto</label><input id="gMonto" class="fi" type="number" placeholder="0"></div>
-        <div class="fg"><label class="fl">Moneda</label><select id="gMoneda" class="fsel"><option>USD</option><option>EUR</option><option>GBP</option></select></div>
-        <div class="fg" style="display:flex;align-items:flex-end"><div style="width:100%"><label class="fl">×Pers.</label><div class="tog" id="ppTog" onclick="togPP()"></div></div></div>
-      </div>
-      <div class="pp-hint" id="ppHint">Total = monto × cantidad de personas</div>
-      <button class="bsave" onclick="saveGasto()">Agregar al Presupuesto</button>
-      <button class="bcancel" onclick="closeAdd()">Cancelar</button>
+    <div class="fg"><label class="fl" id="lCiudad">Ciudad</label><input id="iCiudad" class="fi" placeholder="Ej: París"></div>
+    <div class="fg" id="gMedio" style="display:none">
+      <label class="fl">Medio de transporte</label>
+      <select id="iMedio" class="fsel"><option value="vuelo">✈️ Vuelo</option><option value="tren">🚄 Tren</option><option value="eurostar">🚅 Eurostar</option><option value="bus">🚌 Bus</option><option value="uber">🚗 Uber</option><option value="ferry">⛴️ Ferry</option></select>
     </div>
+    <div class="fg"><label class="fl">Notas / Descripción</label><textarea id="iNotas" class="fta" placeholder="Ej: Llegada, paseo nocturno, tour incluido..."></textarea></div>
+    <button class="bsave" onclick="saveDay()">Guardar</button>
+    <button class="bcancel" onclick="closeDayModal()">Cancelar</button>
   </div>
 </div>
 
-<!-- ════ MODAL: NEW TRIP ════ -->
+<!-- MODAL: SUBITEM -->
+<div class="ov" id="subOv" onclick="if(event.target===this)closeSubModal()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="subModalTitle">Agregar ítem al día</div>
+    <label class="fl">Tipo de ítem</label>
+    <div class="si-type-sel" id="siTypeGrid"></div>
+    <div class="fg"><label class="fl">Descripción</label><input id="siDesc" class="fi" placeholder="Ej: Entrada Disneyland, Premier Access..."></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Monto</label><input id="siMonto" class="fi" type="number" placeholder="0"></div>
+      <div class="fg"><label class="fl">Moneda</label><select id="siMoneda" class="fsel"><option>USD</option><option>EUR</option><option>GBP</option></select></div>
+    </div>
+    <div id="dupWarnModal" style="display:none" class="dup-warn"><i class="fa-solid fa-triangle-exclamation"></i> <span id="dupWarnText"></span></div>
+    <button class="bsave" onclick="saveSubitem()">Guardar ítem</button>
+    <button class="bcancel" onclick="closeSubModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL: GASTO -->
+<div class="ov" id="gastoOv" onclick="if(event.target===this)closeGastoModal()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="gastoModalTitle">Agregar Gasto</div>
+    <label class="fl">Categoría</label>
+    <div class="cat-grid" id="catGrid"></div>
+    <div class="fg"><label class="fl">Descripción</label><input id="gDesc" class="fi" placeholder="Ej: Paris Pass 3 días By Go City"></div>
+    <div class="frow3">
+      <div class="fg"><label class="fl">Monto</label><input id="gMonto" class="fi" type="number" placeholder="0"></div>
+      <div class="fg"><label class="fl">Moneda</label><select id="gMoneda" class="fsel"><option>USD</option><option>EUR</option><option>GBP</option></select></div>
+      <div class="fg" style="display:flex;align-items:flex-end"><div style="width:100%"><label class="fl">×Pers.</label><div class="tog" id="ppTog" onclick="togPP()"></div></div></div>
+    </div>
+    <div class="pp-hint" id="ppHint">Total = monto × cantidad de personas</div>
+    <button class="bsave" onclick="saveGasto()">Guardar gasto</button>
+    <button class="bcancel" onclick="closeGastoModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL: NEW TRIP -->
 <div class="ov-c" id="newTripOv" onclick="if(event.target===this)closeNewTrip()">
   <div class="cbox">
     <div class="cbox-title">Nuevo Viaje ✈</div>
-    <div class="fg"><label class="fl">Nombre del viaje</label><input id="nTripName" class="fi" placeholder="Ej: Europa Completo 2026"></div>
+    <p style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.5">Los viajes anteriores se mantienen y podés volver a ellos con el selector de arriba.</p>
+    <div class="fg"><label class="fl">Nombre del viaje</label><input id="nTripName" class="fi" placeholder="Ej: Europa Corto 2026"></div>
     <button class="bsave" onclick="createTrip()">Crear viaje</button>
     <button class="bcancel" onclick="closeNewTrip()">Cancelar</button>
   </div>
 </div>
 
+<!-- hidden file input for import -->
+<input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)">
+
 <script>
-const SK='viajemanager_v4';
-const MESES=['Ene/Feb','Mar/Abr','May/Jun','Jul/Ago','Sep/Oct','Nov/Dic'];
-const MESES_MONTH=[0,2,4,6,8,10];
-const CATS={vuelo_int:{n:'Vuelo Intl.',e:'✈️',col:'#7B2FBE'},vuelo_int2:{n:'Vuelo Interno',e:'🛫',col:'#9B59B6'},tren:{n:'Tren/Eurostar',e:'🚄',col:'#00A896'},bus:{n:'Bus/Micro',e:'🚌',col:'#2ECC71'},hospedaje:{n:'Hospedaje',e:'🏨',col:'#3498DB'},comidas:{n:'Comidas',e:'🍽️',col:'#E74C3C'},transp_loc:{n:'Transp. Local',e:'🚇',col:'#F39C12'},atraccion:{n:'Entradas/Pases',e:'🎡',col:'#FF6B9D'},excursion:{n:'Tours/Excurs.',e:'🗺️',col:'#E67E22'},otro:{n:'Otro',e:'📋',col:'#95A5A6'}};
-const MEDIOS={vuelo:'✈️ Vuelo',tren:'🚄 Tren',eurostar:'🚅 Eurostar',bus:'🚌 Bus',uber:'🚗 Uber',ferry:'⛴️ Ferry'};
-const IATA={'buenos aires':'BUE','ezeiza':'EZE','aeroparque':'AEP','madrid':'MAD','barcelona':'BCN','oporto':'OPO','porto':'OPO','lisboa':'LIS','roma':'FCO','paris':'CDG','parís':'CDG','londres':'LHR','london':'LHR','edimburgo':'EDI','edinburgh':'EDI','bruselas':'BRU','amsterdam':'AMS','berlin':'BER','viena':'VIE','milan':'MXP','milán':'MXP','munich':'MUC','múnich':'MUC','zurich':'ZRH','ginebra':'GVA','praga':'PRG','budapest':'BUD','rio de janeiro':'GIG','nueva york':'JFK','miami':'MIA','cancun':'CUN','cancún':'CUN','dubai':'DXB','tokio':'NRT','sydney':'SYD'};
+// ══════════════════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════════════════
+const SK = 'vm_v5';
+const MESES = ['Ene/Feb','Mar/Abr','May/Jun','Jul/Ago','Sep/Oct','Nov/Dic'];
+const MESES_M = [0,2,4,6,8,10];
+const CATS = {
+  vuelo_int:{n:'Vuelo Intl.',e:'✈️',col:'#7B2FBE'},
+  vuelo_int2:{n:'Vuelo Interno',e:'🛫',col:'#9B59B6'},
+  tren:{n:'Tren/Eurostar',e:'🚄',col:'#00A896'},
+  bus:{n:'Bus/Micro',e:'🚌',col:'#2ECC71'},
+  hospedaje:{n:'Hospedaje',e:'🏨',col:'#3498DB'},
+  comidas:{n:'Comidas',e:'🍽️',col:'#E74C3C'},
+  transp_loc:{n:'Transp. Local',e:'🚇',col:'#F39C12'},
+  atraccion:{n:'Entradas/Pases',e:'🎡',col:'#FF6B9D'},
+  excursion:{n:'Tours/Excurs.',e:'🗺️',col:'#E67E22'},
+  otro:{n:'Otro',e:'📋',col:'#95A5A6'}
+};
+const SI_TYPES = [
+  {k:'hotel',e:'🏨',n:'Hospedaje'},
+  {k:'traslado',e:'🚌',n:'Traslado'},
+  {k:'entrada',e:'🎡',n:'Entrada'},
+  {k:'comida',e:'🍽️',n:'Comida'},
+  {k:'tour',e:'🗺️',n:'Tour'},
+  {k:'tren',e:'🚄',n:'Tren'},
+  {k:'uber',e:'🚗',n:'Uber'},
+  {k:'otro',e:'📋',n:'Otro'},
+];
+const MEDIOS = {vuelo:'✈️ Vuelo',tren:'🚄 Tren',eurostar:'🚅 Eurostar',bus:'🚌 Bus',uber:'🚗 Uber',ferry:'⛴️ Ferry'};
+const IATA = {'buenos aires':'BUE','ezeiza':'EZE','aeroparque':'AEP','madrid':'MAD','barcelona':'BCN','oporto':'OPO','porto':'OPO','lisboa':'LIS','roma':'FCO','paris':'CDG','parís':'CDG','londres':'LHR','london':'LHR','edimburgo':'EDI','edinburgh':'EDI','bruselas':'BRU','amsterdam':'AMS','berlin':'BER','viena':'VIE','milan':'MXP','milán':'MXP','munich':'MUC','múnich':'MUC','zurich':'ZRH','ginebra':'GVA','praga':'PRG','budapest':'BUD','rio':'GIG','nueva york':'JFK','miami':'MIA','cancun':'CUN','dubai':'DXB','tokio':'NRT','sydney':'SYD'};
+
 function gI(city){if(!city)return null;const c=city.toLowerCase().trim().split(/[\/\-→\s]+/)[0];for(const[k,v]of Object.entries(IATA)){if(c.includes(k)||k.includes(c))return v;}return null;}
 function uid(){return 'x'+Math.random().toString(36).slice(2,10);}
 function fM(v,m){const s=m==='EUR'?'€':m==='GBP'?'£':'$';return s+Math.round(v).toLocaleString('es-AR')+' '+m;}
@@ -571,13 +535,9 @@ function addDays(ds,n){if(!ds)return null;const d=new Date(ds+'T00:00:00');d.set
 function fmtD(ds){if(!ds)return null;return new Date(ds+'T00:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'short'});}
 function fTC(d){return d?d.replace(/-/g,''):'';}
 function seasonStr(m){if(!m||!m.length)return 'Temporada';return m.map(i=>MESES[i]).join(', ');}
+function firstOfMonth(mi){const now=new Date();let yr=now.getFullYear();const mo=MESES_M[mi];if(mo<now.getMonth())yr++;return `${yr}-${String(mo+1).padStart(2,'0')}-01`;}
 
-function firstOfMonth(midx){
-  const now=new Date();let yr=now.getFullYear();const mo=MESES_MONTH[midx];
-  if(mo<now.getMonth())yr++;
-  return `${yr}-${String(mo+1).padStart(2,'0')}-01`;
-}
-
+// URL builders
 function buildFlightLinks(day,t){
   const pax=t.pax||2;const p=day.ciudad.split(/[\/\-→]+/).map(s=>s.trim());
   const fi=gI(p[0])||encodeURIComponent(p[0]);const ti=gI(p[p.length-1])||encodeURIComponent(p[p.length-1]);
@@ -585,11 +545,11 @@ function buildFlightLinks(day,t){
   let dOut='',dIn='';
   if(t.confirmedDate){dOut=t.confirmedDate;dIn=addDays(dOut,dias-1)||'';}
   else if(t.months&&t.months.length){dOut=firstOfMonth(t.months[0]);dIn=addDays(dOut,dias-1)||'';}
-  const dtOut=fTC(dOut);const dtIn=fTC(dIn);const dsOut=dOut?dOut.replace(/-/g,''):'';
-  const tc=dtOut?`https://www.turismocity.com.ar/vuelos/${fi}/${ti}/${dtOut}/${dtIn}/${pax}/economy`:`https://www.turismocity.com.ar/vuelos/${fi}/${ti}`;
-  const sky=dOut?`https://www.skyscanner.com.ar/transporte/vuelos/${fi}/${ti}/${dsOut}/?adults=${pax}`:`https://www.skyscanner.com.ar/transporte/vuelos/${fi}/${ti}/`;
+  const dtO=fTC(dOut);const dtI=fTC(dIn);const dsO=dOut?dOut.replace(/-/g,''):'';
+  const tc=dtO?`https://www.turismocity.com.ar/vuelos/${fi}/${ti}/${dtO}/${dtI}/${pax}/economy`:`https://www.turismocity.com.ar/vuelos/${fi}/${ti}`;
+  const sky=dOut?`https://www.skyscanner.com.ar/transporte/vuelos/${fi}/${ti}/${dsO}/?adults=${pax}`:`https://www.skyscanner.com.ar/transporte/vuelos/${fi}/${ti}/`;
   const gf=`https://www.google.com/travel/flights?q=Vuelos+de+${encodeURIComponent(p[0])}+a+${encodeURIComponent(p[p.length-1])}`;
-  return [{cls:'sl-tc',icon:'✈',label:'Turismo City',url:tc},{cls:'sl-sky',icon:'🔍',label:'Skyscanner',url:sky},{cls:'sl-gf',icon:'🌐',label:'Google Flights',url:gf}];
+  return [{cls:'sl-tc',icon:'✈',label:'Turismo City',url:tc},{cls:'sl-sky',icon:'🔍',label:'Skyscanner',url:sky},{cls:'sl-gf',icon:'🌐',label:'G.Flights',url:gf}];
 }
 function buildTrainLinks(day,dd){
   const p=day.ciudad.split(/[\/\-→]+/).map(s=>s.trim());const f=encodeURIComponent(p[0]);const t2=encodeURIComponent(p[p.length-1]);
@@ -601,84 +561,115 @@ function buildHotelLinks(day,ci,co,pax){
 }
 function rl(links){return links.map(l=>`<a class="slink ${l.cls}" href="${l.url}" target="_blank" rel="noopener">${l.icon} ${l.label}</a>`).join('');}
 
-function seedData(){return{v:4,active:'v1',trips:[{id:'v1',nombre:'Viaje Final',months:[4],dias:21,pax:2,confirmedDate:'',
+// ══════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════
+function seedData(){return{v:5,active:'v1',trips:[{id:'v1',nombre:'Viaje Final',months:[4],dias:21,pax:2,confirmedDate:'',
 days:[
-{id:uid(),n:1,tipo:'trsl',ciudad:'Buenos Aires → Madrid',costo:0,moneda:'USD',notas:'',medio:'vuelo',isFirstFlight:true},
-{id:uid(),n:2,tipo:'est',ciudad:'Madrid',costo:100,moneda:'USD',notas:'Free tour Nocturno Madrid',medio:null},
-{id:uid(),n:3,tipo:'trsl',ciudad:'Madrid → Oporto',costo:100,moneda:'USD',notas:'',medio:'tren'},
-{id:uid(),n:4,tipo:'est',ciudad:'Oporto',costo:150,moneda:'USD',notas:'Vila Nova de Gaia · Aveiro · Braga',medio:null},
-{id:uid(),n:5,tipo:'trsl',ciudad:'Oporto → Bruselas',costo:170,moneda:'USD',notas:'',medio:'vuelo'},
-{id:uid(),n:6,tipo:'est',ciudad:'Gante',costo:200,moneda:'USD',notas:'',medio:null},
-{id:uid(),n:7,tipo:'est',ciudad:'Brujas',costo:0,moneda:'USD',notas:'Belgica - BRUJAS EUR 150 c/u',medio:null},
-{id:uid(),n:8,tipo:'trsl',ciudad:'Bruselas → París',costo:90,moneda:'USD',notas:'Tarde-noche: Barrio Latino · Pantheon',medio:'tren'},
-{id:uid(),n:9,tipo:'est',ciudad:'París',costo:0,moneda:'USD',notas:'Sacré-Coeur · Montmartre',medio:null},
-{id:uid(),n:10,tipo:'est',ciudad:'París – Disney',costo:300,moneda:'USD',notas:'Disneyland París 🎢',medio:null},
-{id:uid(),n:11,tipo:'est',ciudad:'París',costo:0,moneda:'USD',notas:'Versalles $90c/u · Sainte-Chapelle · Opera',medio:null},
-{id:uid(),n:12,tipo:'est',ciudad:'París',costo:1000,moneda:'USD',notas:'Inválidos · Louvre $60c/u (Paris Pass)',medio:null},
-{id:uid(),n:13,tipo:'est',ciudad:'París',costo:0,moneda:'USD',notas:'Arco del Triunfo · Torre Eiffel · Barco Sena',medio:null},
-{id:uid(),n:14,tipo:'trsl',ciudad:'París → Londres',costo:240,moneda:'USD',notas:'Eurostar PLUS',medio:'eurostar'},
-{id:uid(),n:15,tipo:'est',ciudad:'Londres',costo:0,moneda:'USD',notas:'Torre de Londres · London Eye · Crucero Támesis',medio:null},
-{id:uid(),n:16,tipo:'est',ciudad:'Londres',costo:500,moneda:'GBP',notas:'Castillo Windsor · Tower Bridge (London Pass)',medio:null},
-{id:uid(),n:17,tipo:'trsl',ciudad:'Londres → Edimburgo',costo:100,moneda:'USD',notas:'',medio:'tren'},
-{id:uid(),n:18,tipo:'est',ciudad:'Edimburgo',costo:400,moneda:'USD',notas:'',medio:null},
-{id:uid(),n:19,tipo:'trsl',ciudad:'Edimburgo → Madrid',costo:250,moneda:'USD',notas:'',medio:'vuelo'},
-{id:uid(),n:20,tipo:'est',ciudad:'Madrid',costo:200,moneda:'USD',notas:'Toledo · Parque Retiro · Reina Sofía',medio:null},
-{id:uid(),n:21,tipo:'trsl',ciudad:'Madrid → Buenos Aires',costo:0,moneda:'USD',notas:'Vuelta a casa 🏡',medio:'vuelo',isLastFlight:true},
+{id:uid(),n:1,tipo:'trsl',ciudad:'Buenos Aires → Madrid',notas:'',medio:'vuelo',isFirstFlight:true,items:[]},
+{id:uid(),n:2,tipo:'est',ciudad:'Madrid',notas:'Free tour Nocturno Madrid',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel Madrid 1 noche',monto:100,moneda:'USD'}]},
+{id:uid(),n:3,tipo:'trsl',ciudad:'Madrid → Oporto',notas:'',medio:'tren',items:[{id:uid(),tipo:'tren',desc:'Tren Madrid-Oporto',monto:100,moneda:'USD'}]},
+{id:uid(),n:4,tipo:'est',ciudad:'Oporto',notas:'Vila Nova de Gaia · Aveiro · Braga',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel Oporto 1 noche',monto:150,moneda:'USD'}]},
+{id:uid(),n:5,tipo:'trsl',ciudad:'Oporto → Bruselas',notas:'',medio:'vuelo',items:[{id:uid(),tipo:'traslado',desc:'Vuelo Oporto-Bruselas',monto:170,moneda:'USD'}]},
+{id:uid(),n:6,tipo:'est',ciudad:'Bruselas/Gante/Bruselas',notas:'Visitar Gante',medio:null,items:[{id:uid(),tipo:'tren',desc:'Tren Bruselas-Gante',monto:25,moneda:'EUR'},{id:uid(),tipo:'hotel',desc:'Hotel Bruselas 1 noche',monto:150,moneda:'USD'}]},
+{id:uid(),n:7,tipo:'est',ciudad:'Bruselas/Brujas/Bruselas',notas:'Visita a Brujas',medio:null,items:[{id:uid(),tipo:'tren',desc:'Tren Bruselas-Brujas',monto:25,moneda:'EUR'},{id:uid(),tipo:'hotel',desc:'Hotel Bruselas 1 noche',monto:150,moneda:'USD'}]},
+{id:uid(),n:8,tipo:'trsl',ciudad:'Bruselas → París',notas:'Llegada a París. Paseo común',medio:'tren',items:[{id:uid(),tipo:'tren',desc:'Tren Bruselas-París',monto:90,moneda:'USD'}]},
+{id:uid(),n:9,tipo:'est',ciudad:'París',notas:'Sacré-Coeur · Montmartre',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel París 1 noche',monto:200,moneda:'USD'}]},
+{id:uid(),n:10,tipo:'est',ciudad:'París',notas:'Disney 🎢',medio:null,items:[{id:uid(),tipo:'tren',desc:'RER A a Disneyland',monto:10,moneda:'EUR'},{id:uid(),tipo:'entrada',desc:'Entrada Disneyland París',monto:120,moneda:'EUR'},{id:uid(),tipo:'otro',desc:'Premier Access Disney',monto:80,moneda:'EUR'},{id:uid(),tipo:'hotel',desc:'Hotel París 1 noche',monto:200,moneda:'USD'}]},
+{id:uid(),n:11,tipo:'est',ciudad:'París',notas:'Versalles $90c/u · Sainte-Chapelle · Opera',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel París (Paris Pass día 1)',monto:200,moneda:'USD'}]},
+{id:uid(),n:12,tipo:'est',ciudad:'París',notas:'Inválidos · Louvre $60c/u (Paris Pass)',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel París (Paris Pass día 2)',monto:200,moneda:'USD'}]},
+{id:uid(),n:13,tipo:'est',ciudad:'París',notas:'Arco del Triunfo · Torre Eiffel · Barco Sena',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel París (Paris Pass día 3)',monto:200,moneda:'USD'}]},
+{id:uid(),n:14,tipo:'trsl',ciudad:'París → Londres',notas:'Eurostar PLUS',medio:'eurostar',items:[{id:uid(),tipo:'tren',desc:'Eurostar París-Londres',monto:240,moneda:'USD'}]},
+{id:uid(),n:15,tipo:'est',ciudad:'Londres',notas:'Torre de Londres · London Eye · Crucero Támesis',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel Londres 1 noche',monto:220,moneda:'GBP'}]},
+{id:uid(),n:16,tipo:'est',ciudad:'Londres',notas:'Castillo Windsor · Tower Bridge (London Pass)',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel Londres 1 noche',monto:220,moneda:'GBP'}]},
+{id:uid(),n:17,tipo:'trsl',ciudad:'Londres → Edimburgo',notas:'',medio:'tren',items:[{id:uid(),tipo:'tren',desc:'Tren Londres-Edimburgo',monto:100,moneda:'USD'}]},
+{id:uid(),n:18,tipo:'est',ciudad:'Edimburgo',notas:'',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel Edimburgo 1 noche',monto:150,moneda:'USD'}]},
+{id:uid(),n:19,tipo:'trsl',ciudad:'Edimburgo → Madrid',notas:'',medio:'vuelo',items:[{id:uid(),tipo:'traslado',desc:'Vuelo Edimburgo-Madrid',monto:250,moneda:'USD'}]},
+{id:uid(),n:20,tipo:'est',ciudad:'Madrid',notas:'Toledo · Parque Retiro · Reina Sofía',medio:null,items:[{id:uid(),tipo:'hotel',desc:'Hotel Madrid 1 noche',monto:100,moneda:'USD'}]},
+{id:uid(),n:21,tipo:'trsl',ciudad:'Madrid → Buenos Aires',notas:'Vuelta a casa 🏡',medio:'vuelo',isLastFlight:true,items:[]},
 ],
 gastos:[
 {id:uid(),cat:'vuelo_int',desc:'Buenos Aires ↔ Madrid (Air Europa, ida y vuelta)',monto:2200,moneda:'USD',x2:true},
-{id:uid(),cat:'hospedaje',desc:'Total hospedajes todas las ciudades',monto:2850,moneda:'USD',x2:false},
 {id:uid(),cat:'comidas',desc:'Comidas $170/día × 20 días para 2',monto:3400,moneda:'USD',x2:false},
 {id:uid(),cat:'transp_loc',desc:'Navigo semanal París + subtes + Uber varios',monto:400,moneda:'USD',x2:false},
-{id:uid(),cat:'atraccion',desc:'Paris Pass 3 días By Go City',monto:800,moneda:'USD',x2:false},
-{id:uid(),cat:'atraccion',desc:'Disneyland París (entradas)',monto:300,moneda:'USD',x2:false},
-{id:uid(),cat:'atraccion',desc:'London Pass 2 días',monto:600,moneda:'GBP',x2:false},
+{id:uid(),cat:'atraccion',desc:'Paris Pass 3 días By Go City (para 2)',monto:800,moneda:'USD',x2:false},
 {id:uid(),cat:'excursion',desc:'Oporto Tours + Catamarán',monto:140,moneda:'USD',x2:false},
-{id:uid(),cat:'excursion',desc:'Versalles $90 c/u',monto:180,moneda:'USD',x2:false},
-{id:uid(),cat:'excursion',desc:'Edimburgo – visitas',monto:200,moneda:'USD',x2:false},
-{id:uid(),cat:'excursion',desc:'Madrid + Toledo',monto:100,moneda:'USD',x2:false},
+{id:uid(),cat:'excursion',desc:'Versalles $90 c/u (para 2)',monto:180,moneda:'USD',x2:false},
+{id:uid(),cat:'excursion',desc:'Edimburgo – visitas y excursiones',monto:200,moneda:'USD',x2:false},
+{id:uid(),cat:'excursion',desc:'Madrid + Toledo – atracciones',monto:100,moneda:'USD',x2:false},
 ]}]};}
 
-function loadData(){try{const r=localStorage.getItem(SK);if(!r)return seedData();const d=JSON.parse(r);if(!d||d.v!==4)return seedData();return d;}catch(e){return seedData();}}
+function loadData(){try{const r=localStorage.getItem(SK);if(!r)return seedData();const d=JSON.parse(r);if(!d||d.v!==5)return seedData();return d;}catch(e){return seedData();}}
 function saveData(){localStorage.setItem(SK,JSON.stringify(D));}
 let D=loadData();
 function at(){return D.trips.find(t=>t.id===D.active)||D.trips[0];}
-let curTab='ruta',addMode='day',selCatKey='vuelo_int',curType='est',ppOn=false;
-function calcTotal(t){return t.gastos.reduce((a,g)=>{const m=g.monto*(g.x2?(t.pax||2):1);return a+(g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27);},0);}
 
+// ══════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════
+let curTab='ruta';
+let selCatKey='vuelo_int';
+let curType='est';
+let ppOn=false;
+let tempMonths=[];
+// editing state
+let editDayId=null;      // null=new, else id
+let insertAfterIdx=null; // null=append
+let editSubDayId=null;   // day id for subitem
+let editSubId=null;      // null=new subitem
+let editGastoId=null;    // null=new gasto
+let selSiType='hotel';
+
+// ══════════════════════════════════════════════════════
+// CALC
+// ══════════════════════════════════════════════════════
+function calcTotal(t){
+  // Total = sum of gastos only (items in days are reference)
+  return t.gastos.reduce((a,g)=>{
+    const m=g.monto*(g.x2?(t.pax||2):1);
+    return a+(g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27);
+  },0);
+}
+function dayItemsTotal(day){
+  if(!day.items||!day.items.length) return 0;
+  return day.items.reduce((a,it)=>{
+    const u=it.moneda==='USD'?it.monto:it.moneda==='EUR'?it.monto*1.08:it.monto*1.27;
+    return a+u;
+  },0);
+}
+
+// ══════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════
 function render(){
   const t=at();const pax=t.pax||2;
+  // trip name
   const parts=t.nombre.split(' ');const last=parts.pop();
   document.getElementById('tripNameHdr').innerHTML=(parts.join(' ')+' ').trim()+' <em>'+last+'</em>';
   document.getElementById('tripSel').innerHTML=D.trips.map(tr=>`<option value="${tr.id}" ${tr.id===D.active?'selected':''}>${tr.nombre}</option>`).join('');
+  // season
   const hasSeason=t.months&&t.months.length;const hasDias=t.dias>0;
   const sTxt=seasonStr(t.months);const dTxt=hasDias?`${t.dias} días · ${t.dias-1} noches`:'Duración';
-  // mobile pills
-  document.getElementById('seasonLabel').textContent=sTxt;
-  document.getElementById('durLabel').textContent=dTxt;
-  // desktop pills
-  document.getElementById('seasonLabelD').textContent=sTxt;
-  document.getElementById('durLabelD').textContent=dTxt;
+  ['seasonLabel','seasonLabelD'].forEach(id=>document.getElementById(id).textContent=sTxt);
+  ['durLabel','durLabelD'].forEach(id=>document.getElementById(id).textContent=dTxt);
   document.getElementById('paxLabelD').textContent=pax+' persona'+(pax>1?'s':'');
   // confirmed
   if(t.confirmedDate){
-    document.getElementById('confirmedPill').style.display='flex';
+    ['confirmedPill','confirmedPillD'].forEach(id=>{document.getElementById(id).style.display='flex';});
     document.getElementById('confirmedLabel').textContent='✅ '+fmtD(t.confirmedDate);
-    document.getElementById('confirmedPillD').style.display='flex';
     document.getElementById('confirmedLabelD').textContent='✅ '+fmtD(t.confirmedDate);
     document.getElementById('sbConfirmBtn').textContent='✅ Salida: '+fmtD(t.confirmedDate)+' — Cambiar';
-    document.getElementById('sbConfirmBtn').className='sb-confirm-btn confirmed';
+    document.getElementById('sbConfirmBtn').className='sb-btn confirmed';
   } else {
-    document.getElementById('confirmedPill').style.display='none';
-    document.getElementById('confirmedPillD').style.display='none';
+    ['confirmedPill','confirmedPillD'].forEach(id=>{document.getElementById(id).style.display='none';});
     document.getElementById('sbConfirmBtn').textContent='📌 ¿Encontraste el vuelo? Confirmá la fecha';
-    document.getElementById('sbConfirmBtn').className='sb-confirm-btn';
+    document.getElementById('sbConfirmBtn').className='sb-btn confirm';
   }
   // tagline
-  let tl=hasSeason&&hasDias?`${sTxt} · ${t.dias} días · ${pax} personas`:'Configurá temporada y duración para empezar';
-  if(t.confirmedDate)tl+=' · Salida '+fmtD(t.confirmedDate);
+  let tl=hasSeason&&hasDias?`${sTxt} · ${t.dias} días · ${pax} personas`:'Configurá temporada y duración';
+  if(t.confirmedDate) tl+=' · Salida '+fmtD(t.confirmedDate);
   document.getElementById('tripTagline').textContent=tl;
-  // stats (mobile)
+  // stats
   const tot=calcTotal(t);
   document.getElementById('svTotal').textContent=fM(tot,'USD');
   document.getElementById('svPP').textContent=fM(tot/pax,'USD');
@@ -693,27 +684,87 @@ function render(){
 function renderRuta(t){
   const el=document.getElementById('tlList');const pax=t.pax||2;
   if(!t.days.length){el.innerHTML='<div class="empty"><i class="fa-solid fa-map"></i><p>Sin días aún.<br>Agregá el primer destino.</p></div>';return;}
-  el.innerHTML=t.days.map((d,i)=>{
+  let html='';
+  t.days.forEach((d,i)=>{
     const isLast=i===t.days.length-1;
     const iFF=!!d.isFirstFlight;const iLF=!!d.isLastFlight;
-    const dotCls=iFF?'flight-day':iLF?'return-day':d.tipo==='est'?'est':'trsl';
-    const cardCls=iFF?'flight-card':iLF?'return-card':'';
+    const dotCls=iFF?'fd':iLF?'rd':d.tipo==='est'?'est':'trsl';
+    const cardCls=iFF?'fc':iLF?'rc':'';
     const dd=t.confirmedDate?addDays(t.confirmedDate,i):null;
     const dl=dd?`<span class="day-date-lbl">${fmtD(dd)}</span>`:'';
-    const cb=d.costo>0?`<span class="cost-badge ${d.tipo==='est'?'est':'trsl'}">${fM(d.costo,d.moneda)}</span>`:'';
+    // items total badge
+    const itTot=dayItemsTotal(d);
+    const cb=itTot>0?`<span class="cost-badge ${d.tipo==='est'?'est':'trsl'}">${fM(itTot,'USD')}</span>`:'';
     const mc=(d.tipo==='trsl'&&d.medio)?`<span class="medio-chip">${MEDIOS[d.medio]||d.medio}</span>`:'';
-    const nt=d.notas?`<div class="notas">${d.notas}</div>`:'';
+    const nt=d.notas?`<div style="font-size:11px;color:var(--ink3);line-height:1.4;margin-top:3px;margin-bottom:5px;padding-top:3px;border-top:1px solid var(--border)">${d.notas}</div>`:'';
+    // type label
     let typeLbl='',typeCls='';
-    if(iFF){typeLbl='✈ Día de viaje · Vuelo de ida';typeCls='flight-lbl';}
-    else if(iLF){typeLbl='✈ Día de regreso · Vuelta a casa';typeCls='return-lbl';}
+    if(iFF){typeLbl='✈ Día de viaje · Vuelo de ida';typeCls='fd';}
+    else if(iLF){typeLbl='✈ Día de regreso · Vuelta a casa';typeCls='rd';}
     else if(d.tipo==='est'){typeLbl='<i class="fa-solid fa-hotel"></i> Estadía';typeCls='est';}
     else{typeLbl=`<i class="fa-solid fa-plane-departure"></i> Traslado${mc}`;typeCls='trsl';}
+    // search links
     let sh='';
     if(iFF||iLF){sh=rl(buildFlightLinks(d,t));}
     else if(d.tipo==='trsl'){if(d.medio==='vuelo')sh=rl(buildFlightLinks(d,t));else if(['tren','eurostar','bus'].includes(d.medio))sh=rl(buildTrainLinks(d,dd));}
     else{const co=dd?addDays(dd,1):null;sh=rl(buildHotelLinks(d,dd,co,pax));}
-    return`<div class="tl-item"><div class="tl-left"><div class="day-dot ${dotCls}">${d.n}</div>${!isLast?'<div class="tl-line"></div>':''}</div><div class="tl-card ${cardCls}"><div class="tl-top"><div class="city-lbl">${d.ciudad}</div>${cb}</div><div class="type-meta ${typeCls}">${typeLbl}${dl}</div>${nt}<div class="card-footer"><div class="search-links">${sh}</div><button class="del-btn" onclick="deleteDay('${d.id}')"><i class="fa-solid fa-trash-can"></i></button></div></div></div>`;
-  }).join('');
+    // sub-items
+    let siHtml='';
+    if(d.items&&d.items.length){
+      const siRows=d.items.map((it,si)=>{
+        const siT=SI_TYPES.find(s=>s.k===it.tipo)||SI_TYPES[SI_TYPES.length-1];
+        return`<div class="subitem">
+          <span class="subitem-icon">${siT.e}</span>
+          <span class="subitem-desc">${it.desc}</span>
+          <span class="subitem-monto">${fM(it.monto,it.moneda)}</span>
+          <div class="subitem-btns">
+            <button class="subitem-btn edit" onclick="openSubModal('${d.id}','${it.id}')"><i class="fa-solid fa-pen"></i></button>
+            <button class="subitem-btn" onclick="deleteSubitem('${d.id}','${it.id}')"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>`;
+      }).join('');
+      siHtml=`<div class="subitems">${siRows}</div>`;
+    }
+    // dup warning: check if any subitem desc matches a gasto desc
+    let dupHtml='';
+    if(d.items&&d.items.length){
+      const gastoDescs=t.gastos.map(g=>g.desc.toLowerCase());
+      const dup=d.items.find(it=>gastoDescs.some(gd=>gd.includes(it.desc.toLowerCase().slice(0,8))||it.desc.toLowerCase().includes(gd.slice(0,8))));
+      if(dup) dupHtml=`<div class="dup-warn"><i class="fa-solid fa-triangle-exclamation"></i> Verificá que "${dup.desc}" no esté duplicado en Gastos</div>`;
+    }
+    // card actions
+    const upBtn=i>0?`<button class="ca-btn up" onclick="moveDay(${i},-1)" title="Subir"><i class="fa-solid fa-chevron-up"></i></button>`:'';
+    const dnBtn=!isLast?`<button class="ca-btn dn" onclick="moveDay(${i},1)" title="Bajar"><i class="fa-solid fa-chevron-down"></i></button>`:'';
+    html+=`
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="day-dot ${dotCls}">${d.n}</div>
+          ${!isLast?'<div class="tl-line"></div>':''}
+        </div>
+        <div class="tl-card ${cardCls}">
+          <div class="tl-top"><div class="city-lbl">${d.ciudad}</div>${cb}</div>
+          <div class="type-meta ${typeCls}">${typeLbl}${dl}</div>
+          ${nt}
+          ${siHtml}
+          ${dupHtml}
+          <div class="card-footer">
+            <div class="search-links">${sh}</div>
+            <div class="card-actions">
+              <button class="ca-btn add-sub" onclick="openSubModal('${d.id}',null)" title="Agregar ítem"><i class="fa-solid fa-plus"></i></button>
+              <button class="ca-btn edit" onclick="openDayModal('${d.id}',null)" title="Editar día"><i class="fa-solid fa-pen"></i></button>
+              ${upBtn}${dnBtn}
+              <button class="ca-btn del" onclick="deleteDay('${d.id}')" title="Eliminar día"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${!isLast?`<div class="insert-zone">
+        <div class="insert-zone-line"></div>
+        <button class="insert-btn" onclick="openDayModal(null,${i})" title="Insertar día aquí"><i class="fa-solid fa-plus"></i></button>
+        <div class="insert-zone-line"></div>
+      </div>`:''}`;
+  });
+  el.innerHTML=html;
 }
 
 function renderGastos(t){
@@ -722,19 +773,30 @@ function renderGastos(t){
   const g={};t.gastos.forEach(x=>{if(!g[x.cat])g[x.cat]=[];g[x.cat].push(x);});
   el.innerHTML=Object.entries(g).map(([cat,items])=>{
     const C=CATS[cat]||CATS.otro;const tot=items.reduce((a,x)=>a+(x.monto*(x.x2?pax:1)),0);
-    return`<div class="cat-section"><div class="cat-hdr"><div class="cat-title"><div class="cat-emoji" style="background:${C.col}18">${C.e}</div>${C.n}</div><div class="cat-subtotal">${fM(tot,items[0].moneda)}</div></div>${items.map(x=>`<div class="g-item"><div style="flex:1"><div class="g-name">${x.desc}</div><div class="g-meta">${x.x2?fM(x.monto,x.moneda)+' × '+pax+' pers = ':''} ${fM(x.monto*(x.x2?pax:1),x.moneda)}</div></div><button class="g-del" onclick="deleteGasto('${x.id}')"><i class="fa-solid fa-xmark"></i></button></div>`).join('')}</div>`;
+    return`<div class="cat-section">
+      <div class="cat-hdr"><div class="cat-title"><div class="cat-emoji" style="background:${C.col}18">${C.e}</div>${C.n}</div><div class="cat-sub">${fM(tot,items[0].moneda)}</div></div>
+      ${items.map(x=>`<div class="g-item">
+        <div style="flex:1"><div class="g-name">${x.desc}</div><div class="g-meta">${x.x2?fM(x.monto,x.moneda)+' × '+pax+' pers = ':''} ${fM(x.monto*(x.x2?pax:1),x.moneda)}</div></div>
+        <div class="g-btns">
+          <button class="g-btn edit" onclick="openGastoModal('${x.id}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="g-btn del" onclick="deleteGasto('${x.id}')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>`).join('')}
+    </div>`;
   }).join('');
 }
 
 function renderSidebar(t){
   const pax=t.pax||2;
-  const ct={};t.gastos.forEach(g=>{const m=g.monto*(g.x2?pax:1);const u=g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27;ct[g.cat]=(ct[g.cat]||0)+u;});
+  const ct={};
+  t.gastos.forEach(g=>{const m=g.monto*(g.x2?pax:1);const u=g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27;ct[g.cat]=(ct[g.cat]||0)+u;});
+  const tot=calcTotal(t);
   const bd=document.getElementById('sbBreakdown');
-  bd.innerHTML=`<div class="sb-breakdown-title">Desglose por categoría</div>`+Object.entries(ct).map(([cat,usd])=>{const C=CATS[cat]||CATS.otro;return`<div class="sb-row"><div class="sb-row-left"><span>${C.e}</span>${C.n}</div><div class="sb-row-right">${fM(usd,'USD')}</div></div>`;}).join('');
+  const rows=Object.entries(ct).map(([cat,usd])=>{const C=CATS[cat]||CATS.otro;return`<div class="sb-row"><div class="sb-row-l"><span>${C.e}</span>${C.n}</div><div class="sb-row-r">${fM(usd,'USD')}</div></div>`;}).join('');
+  bd.innerHTML=`<div class="sb-bk-title">Desglose por categoría</div>${rows}<div class="sb-row"><div class="sb-row-l"><b>Total</b></div><div class="sb-row-r">${fM(tot,'USD')}</div></div>`;
   const est=t.days.filter(d=>d.tipo==='est');
   const cities=[...new Set(est.map(d=>d.ciudad.split(/[–\-\/]/)[0].trim()))];
-  const sc=document.getElementById('sbCities');
-  sc.innerHTML=`<div class="sb-cities-title">📍 ${cities.length} destinos · ${est.length} estadías</div>`+cities.map(c=>`<span class="city-chip">📍 ${c}</span>`).join('');
+  document.getElementById('sbCities').innerHTML=`<div class="sb-cities-title">📍 ${cities.length} destinos · ${est.length} estadías</div>`+cities.map(c=>`<span class="sb-chip">📍 ${c}</span>`).join('');
 }
 
 function renderResumen(t){
@@ -745,35 +807,164 @@ function renderResumen(t){
   const stxt=(t.months&&t.months.length)?seasonStr(t.months):'Temporada a definir';
   const dtxt=t.dias?`${t.dias} días · ${t.dias-1} noches`:'Duración a definir';
   const confirmBtn=t.confirmedDate?`<button onclick="openConfirmDateModal()" style="background:rgba(0,168,150,.15);border:1px solid rgba(0,168,150,.3);border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#00695C;cursor:pointer;margin-top:8px">✅ Salida: ${fmtD(t.confirmedDate)} — Cambiar</button>`:`<button onclick="openConfirmDateModal()" style="background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.4);border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#92400E;cursor:pointer;margin-top:8px">📌 ¿Encontraste el vuelo? Confirmá la fecha</button>`;
-  const cards=Object.entries(ct).map(([cat,usd])=>{const C=CATS[cat]||CATS.otro;return`<div class="res-card"><div class="res-e">${C.e}</div><div class="res-n">${C.n}</div><div class="res-v">${fM(usd,'USD')}</div><div class="res-pp">pp: ${fM(usd/pax,'USD')}</div></div>`;}).join('');
-  const pills=cities.map(c=>`<span class="city-chip-m">📍 ${c}</span>`).join('');
-  el.innerHTML=`<div class="big-total"><div class="big-total-lbl">Total estimado · ${pax} personas</div><div class="big-total-num">${fM(tot,'USD')}</div><div class="big-total-sub">Por persona: ${fM(tot/pax,'USD')} · ${t.days.length} días</div><div class="big-total-season">${stxt} · ${dtxt}</div><div style="margin-top:6px">${confirmBtn}</div></div><div class="ai-card"><button class="ai-btn" id="aiBtn" onclick="runAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA · Estimados de precio</button><div class="ai-result" id="aiResult"><div class="ai-result-ttl"><i class="fa-solid fa-robot"></i> Análisis del asistente</div><div class="ai-result-body" id="aiBody"></div></div></div><div class="res-grid">${cards}</div><div class="cities-card"><div class="cities-lbl">📍 ${cities.length} destinos · ${est.length} estadías · ${trl.length} traslados</div>${pills}</div>`;
+  const cards=Object.entries(ct).map(([cat,usd])=>{const C=CATS[cat]||CATS.otro;return`<div class="res-card"><div class="rc-e">${C.e}</div><div class="rc-n">${C.n}</div><div class="rc-v">${fM(usd,'USD')}</div><div class="rc-pp">pp: ${fM(usd/pax,'USD')}</div></div>`;}).join('');
+  const pills=cities.map(c=>`<span class="city-chm">📍 ${c}</span>`).join('');
+  el.innerHTML=`
+    <div class="io-row">
+      <button class="io-btn" onclick="exportJSON()"><i class="fa-solid fa-download"></i> Exportar JSON</button>
+      <button class="io-btn" onclick="importJSON()"><i class="fa-solid fa-upload"></i> Importar JSON</button>
+    </div>
+    <div class="big-total"><div class="bt-lbl">Total estimado · ${pax} personas</div><div class="bt-num">${fM(tot,'USD')}</div><div class="bt-sub">Por persona: ${fM(tot/pax,'USD')} · ${t.days.length} días</div><div class="bt-season">${stxt} · ${dtxt}</div><div style="margin-top:6px">${confirmBtn}</div></div>
+    <div class="ai-card"><button class="ai-btn" id="aiBtn" onclick="runAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA · Estimados de precio</button><div class="ai-result" id="aiResult"><div class="ai-result-ttl"><i class="fa-solid fa-robot"></i> Análisis</div><div class="ai-result-body" id="aiBody"></div></div></div>
+    <div class="res-grid">${cards}</div>
+    <div class="cities-card"><div class="cities-lbl">📍 ${cities.length} destinos · ${est.length} estadías · ${trl.length} traslados</div>${pills}</div>`;
 }
 
-async function runAI(){
-  const t=at();const pax=t.pax||2;
-  const isDesktop=window.innerWidth>=900;
-  const btn=isDesktop?document.getElementById('sbAiBtn'):document.getElementById('aiBtn');
-  const result=isDesktop?document.getElementById('sbAiResult'):document.getElementById('aiResult');
-  const body=isDesktop?document.getElementById('sbAiBody'):document.getElementById('aiBody');
-  if(!btn||!body)return;
-  btn.disabled=true;btn.innerHTML='<div class="ai-loader">Analizando...</div>';
-  if(result)result.classList.add('show');
-  body.innerHTML='<div class="ai-loader">Consultando...</div>';
-  const itin=t.days.map(d=>`Día ${d.n}: ${d.ciudad} (${d.isFirstFlight?'✈ VUELO IDA':d.isLastFlight?'✈ VUELTA':d.tipo==='est'?'Estadía':'Traslado via '+d.medio}) ${d.costo>0?'$'+d.costo+' '+d.moneda:''} ${d.notas?'· '+d.notas:''}`).join('\n');
-  const gc=t.gastos.map(g=>`- ${g.desc}: ${g.monto} ${g.moneda}${g.x2?' ×'+pax+' pers':''}`).join('\n');
-  const stxt=(t.months&&t.months.length)?seasonStr(t.months):'sin definir';
-  const prompt=`Sos un experto en viajes a Europa para turistas argentinos. Analizá:\n\nVIAJE: ${t.nombre} | TEMPORADA: ${stxt} | DURACIÓN: ${t.dias||'?'} días Turismo City (${(t.dias||1)-1} noches) | PERSONAS: ${pax}${t.confirmedDate?' | FECHA CONFIRMADA: '+t.confirmedDate:''}\n\nITINERARIO:\n${itin}\n\nGASTOS CARGADOS:\n${gc||'Ninguno'}\nTOTAL: USD ${Math.round(calcTotal(t)).toLocaleString()}\n\nEn español argentino, conciso:\n1. 💬 Evaluación del presupuesto para ${pax} personas\n2. ✈️ Rangos de vuelo BUE ↔ ${t.days[1]?.ciudad||'Europa'} en temporada ${stxt}. Mencioná Turismo City, Skyscanner y Google Flights.\n3. 🏨 ¿El hospedaje estimado es realista? Booking/Airbnb/Trivago por ciudad.\n4. 🍽️ Comidas: rango diario para ${pax} personas en Europa\n5. 🎡 ¿Falta alguna atracción obvia?\n6. 💡 3 consejos concretos para esta temporada\nTerminá con rango total para ${pax} personas.`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
-    const data=await r.json();
-    body.innerHTML=(data.content?.map(b=>b.text||'').join('')||'Sin respuesta.').replace(/\n/g,'<br>');
-  }catch(e){body.innerHTML='⚠️ Error de conexión. Intentá de nuevo.';}
-  btn.disabled=false;btn.innerHTML=isDesktop?'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis IA':'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis';
+// ══════════════════════════════════════════════════════
+// DAY MODAL
+// ══════════════════════════════════════════════════════
+function openDayModal(dayId, afterIdx){
+  editDayId=dayId;insertAfterIdx=afterIdx;
+  document.getElementById('dayModalTitle').textContent=dayId?'Editar Día':'Agregar Día';
+  if(dayId){
+    const t=at();const d=t.days.find(x=>x.id===dayId);
+    if(!d)return;
+    curType=d.tipo;
+    document.getElementById('iCiudad').value=d.ciudad;
+    document.getElementById('iMedio').value=d.medio||'vuelo';
+    document.getElementById('iNotas').value=d.notas||'';
+  } else {
+    curType='est';
+    document.getElementById('iCiudad').value='';
+    document.getElementById('iNotas').value='';
+  }
+  updateTypeToggle();
+  document.getElementById('dayOv').classList.add('open');
+}
+function closeDayModal(){document.getElementById('dayOv').classList.remove('open');}
+function setType(tp){curType=tp;updateTypeToggle();}
+function updateTypeToggle(){
+  document.getElementById('ttEst').classList.toggle('on',curType==='est');
+  document.getElementById('ttTrsl').classList.toggle('on',curType==='trsl');
+  document.getElementById('gMedio').style.display=curType==='trsl'?'block':'none';
+  document.getElementById('lCiudad').textContent=curType==='trsl'?'Ruta (Origen → Destino)':'Ciudad';
+}
+function saveDay(){
+  const ciudad=document.getElementById('iCiudad').value.trim();
+  if(!ciudad){alert('Agregá la ciudad o ruta.');return;}
+  const t=at();
+  if(editDayId){
+    // edit existing
+    const d=t.days.find(x=>x.id===editDayId);
+    if(d){d.tipo=curType;d.ciudad=ciudad;d.notas=document.getElementById('iNotas').value.trim();if(curType==='trsl')d.medio=document.getElementById('iMedio').value;else d.medio=null;}
+  } else {
+    const newDay={id:uid(),tipo:curType,ciudad,notas:document.getElementById('iNotas').value.trim(),medio:curType==='trsl'?document.getElementById('iMedio').value:null,items:[]};
+    if(insertAfterIdx!==null&&insertAfterIdx>=0){
+      t.days.splice(insertAfterIdx+1,0,newDay);
+    } else {
+      t.days.push(newDay);
+    }
+    renumberDays(t);
+  }
+  saveData();closeDayModal();render();
+}
+function renumberDays(t){t.days.forEach((d,i)=>d.n=i+1);}
+function deleteDay(id){const t=at();t.days=t.days.filter(d=>d.id!==id);renumberDays(t);saveData();render();}
+function moveDay(idx,dir){
+  const t=at();const newIdx=idx+dir;
+  if(newIdx<0||newIdx>=t.days.length)return;
+  [t.days[idx],t.days[newIdx]]=[t.days[newIdx],t.days[idx]];
+  renumberDays(t);saveData();render();
 }
 
-// Modals
-let tempMonths=[];
+// ══════════════════════════════════════════════════════
+// SUBITEM MODAL
+// ══════════════════════════════════════════════════════
+function openSubModal(dayId,subId){
+  editSubDayId=dayId;editSubId=subId;
+  document.getElementById('subModalTitle').textContent=subId?'Editar ítem':'Agregar ítem al día';
+  if(subId){
+    const t=at();const d=t.days.find(x=>x.id===dayId);
+    const si=d&&d.items?d.items.find(x=>x.id===subId):null;
+    if(si){
+      selSiType=si.tipo;
+      document.getElementById('siDesc').value=si.desc;
+      document.getElementById('siMonto').value=si.monto;
+      document.getElementById('siMoneda').value=si.moneda;
+    }
+  } else {
+    selSiType='hotel';
+    document.getElementById('siDesc').value='';
+    document.getElementById('siMonto').value='';
+    document.getElementById('siMoneda').value='USD';
+  }
+  buildSiTypeGrid();
+  checkDupWarn();
+  document.getElementById('subOv').classList.add('open');
+}
+function closeSubModal(){document.getElementById('subOv').classList.remove('open');}
+function buildSiTypeGrid(){
+  document.getElementById('siTypeGrid').innerHTML=SI_TYPES.map(s=>`<div class="si-type-btn ${s.k===selSiType?'on':''}" onclick="selSiTypeFn('${s.k}')">${s.e} ${s.n}</div>`).join('');
+}
+function selSiTypeFn(k){selSiType=k;buildSiTypeGrid();}
+function checkDupWarn(){
+  const desc=document.getElementById('siDesc').value;
+  const t=at();
+  const match=desc.length>4&&t.gastos.find(g=>g.desc.toLowerCase().includes(desc.toLowerCase().slice(0,8))||desc.toLowerCase().includes(g.desc.toLowerCase().slice(0,8)));
+  const dw=document.getElementById('dupWarnModal');
+  const dt=document.getElementById('dupWarnText');
+  if(match){dw.style.display='flex';dt.textContent=`Tenés "${match.desc}" en Gastos — verificá si estás sumando dos veces`;}
+  else dw.style.display='none';
+}
+function saveSubitem(){
+  const desc=document.getElementById('siDesc').value.trim();
+  const monto=parseFloat(document.getElementById('siMonto').value)||0;
+  if(!desc){alert('Agregá una descripción.');return;}
+  const t=at();const d=t.days.find(x=>x.id===editSubDayId);
+  if(!d)return;
+  if(!d.items)d.items=[];
+  if(editSubId){const si=d.items.find(x=>x.id===editSubId);if(si){si.tipo=selSiType;si.desc=desc;si.monto=monto;si.moneda=document.getElementById('siMoneda').value;}}
+  else{d.items.push({id:uid(),tipo:selSiType,desc,monto,moneda:document.getElementById('siMoneda').value});}
+  saveData();closeSubModal();render();
+}
+function deleteSubitem(dayId,subId){const t=at();const d=t.days.find(x=>x.id===dayId);if(d&&d.items)d.items=d.items.filter(x=>x.id!==subId);saveData();render();}
+
+// ══════════════════════════════════════════════════════
+// GASTO MODAL
+// ══════════════════════════════════════════════════════
+function openGastoModal(gastoId){
+  editGastoId=gastoId;
+  document.getElementById('gastoModalTitle').textContent=gastoId?'Editar Gasto':'Agregar Gasto';
+  if(gastoId){
+    const t=at();const g=t.gastos.find(x=>x.id===gastoId);
+    if(g){selCatKey=g.cat;document.getElementById('gDesc').value=g.desc;document.getElementById('gMonto').value=g.monto;document.getElementById('gMoneda').value=g.moneda;ppOn=g.x2;updatePP();}
+  } else {
+    selCatKey='vuelo_int';
+    document.getElementById('gDesc').value='';document.getElementById('gMonto').value='';
+    document.getElementById('gMoneda').value='USD';ppOn=false;updatePP();
+  }
+  buildCatGrid();
+  document.getElementById('gastoOv').classList.add('open');
+}
+function closeGastoModal(){document.getElementById('gastoOv').classList.remove('open');}
+function buildCatGrid(){document.getElementById('catGrid').innerHTML=Object.entries(CATS).map(([k,C])=>`<div class="copt ${k===selCatKey?'on':''}" onclick="selCatFn('${k}')"><span class="ce">${C.e}</span><div class="cn">${C.n}</div></div>`).join('');}
+function selCatFn(k){selCatKey=k;buildCatGrid();}
+function togPP(){ppOn=!ppOn;updatePP();}
+function updatePP(){document.getElementById('ppTog').classList.toggle('on',ppOn);document.getElementById('ppHint').style.display=ppOn?'block':'none';}
+function saveGasto(){
+  const desc=document.getElementById('gDesc').value.trim();
+  if(!desc){alert('Agregá una descripción.');return;}
+  const t=at();
+  const data={cat:selCatKey,desc,monto:parseFloat(document.getElementById('gMonto').value)||0,moneda:document.getElementById('gMoneda').value,x2:ppOn};
+  if(editGastoId){const g=t.gastos.find(x=>x.id===editGastoId);if(g)Object.assign(g,data);}
+  else t.gastos.push({id:uid(),...data});
+  saveData();closeGastoModal();render();
+}
+function deleteGasto(id){const t=at();t.gastos=t.gastos.filter(g=>g.id!==id);saveData();render();}
+
+// ══════════════════════════════════════════════════════
+// SEASON / DURATION / DATE
+// ══════════════════════════════════════════════════════
 function openSeasonModal(){const t=at();tempMonths=[...(t.months||[])];buildSeasonGrid();document.getElementById('diasInput').value=t.dias||'';document.getElementById('paxInput').value=t.pax||2;updateNightsNote();document.getElementById('seasonOv').classList.add('open');}
 function closeSeasonModal(){document.getElementById('seasonOv').classList.remove('open');}
 function buildSeasonGrid(){document.getElementById('seasonGrid').innerHTML=MESES.map((m,i)=>`<div class="month-pill ${tempMonths.includes(i)?'on':''}" onclick="toggleMonth(${i})">${m}</div>`).join('');}
@@ -787,51 +978,104 @@ function saveDuration(){const t=at();t.dias=parseInt(document.getElementById('di
 function openConfirmDateModal(){const t=at();document.getElementById('confirmedDateInput').value=t.confirmedDate||'';document.getElementById('removeDateWrap').style.display=t.confirmedDate?'block':'none';document.getElementById('confirmDateOv').classList.add('open');}
 function saveConfirmedDate(){const t=at();t.confirmedDate=document.getElementById('confirmedDateInput').value;saveData();document.getElementById('confirmDateOv').classList.remove('open');render();}
 function removeConfirmedDate(){const t=at();t.confirmedDate='';saveData();document.getElementById('confirmDateOv').classList.remove('open');render();}
-function openAdd(mode){
-  if(mode)addMode=mode; else addMode=curTab==='gastos'?'gasto':'day';
-  document.getElementById('fDay').style.display=addMode==='day'?'block':'none';
-  document.getElementById('fGasto').style.display=addMode==='gasto'?'block':'none';
-  if(addMode==='gasto')buildCatGrid();
-  ['iCiudad','iCosto','iNotas','gDesc','gMonto'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-  curType='est';updateTypeToggle();ppOn=false;updatePP();
-  document.getElementById('addOv').classList.add('open');
-}
-function closeAdd(){document.getElementById('addOv').classList.remove('open');}
-function setType(tp){curType=tp;updateTypeToggle();}
-function updateTypeToggle(){
-  document.getElementById('ttEst').classList.toggle('on',curType==='est');
-  document.getElementById('ttTrsl').classList.toggle('on',curType==='trsl');
-  document.getElementById('gMedio').style.display=curType==='trsl'?'block':'none';
-  document.getElementById('lCiudad').textContent=curType==='trsl'?'Ruta (Origen → Destino)':'Ciudad';
-  document.getElementById('lCosto').textContent=curType==='trsl'?'Costo traslado':'Hospedaje (esa noche)';
-}
-function buildCatGrid(){document.getElementById('catGrid').innerHTML=Object.entries(CATS).map(([k,C])=>`<div class="copt ${k===selCatKey?'on':''}" onclick="selCatFn('${k}')"><span class="ce">${C.e}</span><div class="cn">${C.n}</div></div>`).join('');}
-function selCatFn(k){selCatKey=k;buildCatGrid();}
-function togPP(){ppOn=!ppOn;updatePP();}
-function updatePP(){document.getElementById('ppTog').classList.toggle('on',ppOn);document.getElementById('ppHint').style.display=ppOn?'block':'none';}
-function saveDay(){
-  const ciudad=document.getElementById('iCiudad').value.trim();if(!ciudad){alert('Agregá la ciudad o ruta.');return;}
-  const t=at();const n=t.days.length?Math.max(...t.days.map(d=>d.n))+1:1;
-  t.days.push({id:uid(),n,tipo:curType,ciudad,costo:parseFloat(document.getElementById('iCosto').value)||0,moneda:document.getElementById('iMoneda').value,notas:document.getElementById('iNotas').value.trim(),medio:curType==='trsl'?document.getElementById('iMedio').value:null});
-  saveData();closeAdd();render();
-}
-function saveGasto(){
-  const desc=document.getElementById('gDesc').value.trim();if(!desc){alert('Agregá descripción.');return;}
-  const t=at();t.gastos.push({id:uid(),cat:selCatKey,desc,monto:parseFloat(document.getElementById('gMonto').value)||0,moneda:document.getElementById('gMoneda').value,x2:ppOn});
-  saveData();closeAdd();render();
-}
-function deleteDay(id){const t=at();t.days=t.days.filter(d=>d.id!==id);saveData();render();}
-function deleteGasto(id){const t=at();t.gastos=t.gastos.filter(g=>g.id!==id);saveData();render();}
+
+// ══════════════════════════════════════════════════════
+// TRIPS
+// ══════════════════════════════════════════════════════
 function switchTrip(id){D.active=id;saveData();render();}
 function togglePax(){const t=at();t.pax=t.pax===1?2:t.pax===2?3:t.pax===3?4:1;saveData();render();}
 function openNewTrip(){document.getElementById('nTripName').value='';document.getElementById('newTripOv').classList.add('open');}
 function closeNewTrip(){document.getElementById('newTripOv').classList.remove('open');}
 function createTrip(){const name=document.getElementById('nTripName').value.trim();if(!name){alert('Poné un nombre.');return;}const id=uid();D.trips.push({id,nombre:name,months:[],dias:0,pax:2,confirmedDate:'',days:[],gastos:[]});D.active=id;saveData();closeNewTrip();render();}
-function confirmDeleteTrip(){const t=at();if(D.trips.length===1){alert('No podés eliminar el único viaje.');return;}if(!confirm('¿Eliminar "'+t.nombre+'"?'))return;D.trips=D.trips.filter(tr=>tr.id!==D.active);D.active=D.trips[0].id;saveData();render();}
-function switchTab(tab,btn){curTab=tab;document.querySelectorAll('.tc').forEach(el=>el.classList.remove('active'));document.getElementById('tc-'+tab).classList.add('active');document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');updateFab();}
-function updateFab(){const fw=document.getElementById('fabWrap');if(!fw)return;if(curTab==='resumen'){fw.style.display='none';return;}fw.style.display='flex';document.getElementById('fabTxt').textContent=curTab==='gastos'?'Agregar Gasto':'Agregar Día';}
+function confirmDeleteTrip(){const t=at();if(D.trips.length===1){alert('No podés eliminar el único viaje.');return;}if(!confirm('¿Eliminar "'+t.nombre+'"? No se puede deshacer.'))return;D.trips=D.trips.filter(tr=>tr.id!==D.active);D.active=D.trips[0].id;saveData();render();}
 
+// ══════════════════════════════════════════════════════
+// TABS & FAB
+// ══════════════════════════════════════════════════════
+function switchTab(tab,btn){
+  curTab=tab;
+  document.querySelectorAll('.tc').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tc-'+tab).classList.add('active');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');updateFab();
+}
+function updateFab(){
+  const fw=document.getElementById('fabWrap');if(!fw)return;
+  if(curTab==='resumen'){fw.style.display='none';return;}
+  fw.style.display='flex';
+  document.getElementById('fabTxt').textContent=curTab==='gastos'?'Agregar Gasto':'Agregar Día';
+}
+function openFabAdd(){
+  if(curTab==='gastos')openGastoModal(null);
+  else openDayModal(null,null);
+}
+
+// ══════════════════════════════════════════════════════
+// EXPORT / IMPORT
+// ══════════════════════════════════════════════════════
+function exportJSON(){
+  const t=at();
+  const blob=new Blob([JSON.stringify({exportedTrip:t,exportDate:new Date().toISOString()},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=t.nombre.replace(/\s+/g,'_')+'.json';a.click();URL.revokeObjectURL(url);
+}
+function importJSON(){document.getElementById('importFileInput').click();}
+function handleImportFile(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const json=JSON.parse(ev.target.result);
+      const trip=json.exportedTrip||json;
+      if(!trip.id||!trip.nombre)throw new Error('Formato inválido');
+      // check if trip with same id already exists
+      const exists=D.trips.findIndex(t=>t.id===trip.id);
+      if(exists>=0){if(!confirm('Ya existe un viaje con ese ID. ¿Reemplazarlo?'))return;D.trips[exists]=trip;}
+      else D.trips.push(trip);
+      D.active=trip.id;saveData();render();
+      alert('Viaje importado correctamente: '+trip.nombre);
+    }catch(err){alert('Error al importar: '+err.message);}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+// ══════════════════════════════════════════════════════
+// AI
+// ══════════════════════════════════════════════════════
+async function runAI(){
+  const t=at();const pax=t.pax||2;
+  const isDesktop=window.innerWidth>=900;
+  const btn=isDesktop?document.getElementById('sbAiBtn'):document.getElementById('aiBtn');
+  const result=isDesktop?document.getElementById('sbAiRes'):document.getElementById('aiResult');
+  const body=isDesktop?document.getElementById('sbAiRes'):document.getElementById('aiBody');
+  if(!btn)return;
+  btn.disabled=true;btn.innerHTML='<div class="ai-loader">Analizando tu viaje...</div>';
+  if(result){result.classList.add('show');}
+  if(body)body.innerHTML='<div class="ai-loader">Consultando...</div>';
+  const itin=t.days.map(d=>{const items=d.items&&d.items.length?' ['+d.items.map(i=>i.desc+' $'+i.monto+' '+i.moneda).join(', ')+']':'';return`Día ${d.n}: ${d.ciudad}${items}`;}).join('\n');
+  const gc=t.gastos.map(g=>`- ${g.desc}: ${g.monto} ${g.moneda}${g.x2?' ×'+pax+' pers':''}`).join('\n');
+  const stxt=(t.months&&t.months.length)?seasonStr(t.months):'sin definir';
+  const prompt=`Sos experto en viajes a Europa para argentinos. Analizá:\n\nVIAJE: ${t.nombre} | TEMPORADA: ${stxt} | DURACIÓN: ${t.dias||'?'} días (${(t.dias||1)-1} noches) | PERSONAS: ${pax}${t.confirmedDate?' | SALIDA: '+t.confirmedDate:''}\n\nITINERARIO:\n${itin}\n\nGASTOS:\n${gc||'Ninguno'}\nTOTAL GASTOS: USD ${Math.round(calcTotal(t)).toLocaleString()}\n\nEn español argentino, conciso:\n1. 💬 Evaluación del presupuesto para ${pax} personas\n2. ✈️ Vuelos BUE ↔ Europa para ${stxt} — rangos. Mencioná Turismo City, Skyscanner y Google Flights.\n3. 🏨 Hospedaje — ¿los montos son realistas? Booking/Airbnb/Trivago por ciudad.\n4. 🍽️ Comidas diarias para ${pax} personas\n5. 🎡 ¿Falta algo obvio?\n6. 💡 3 consejos concretos\nTerminá con rango total para ${pax} personas.`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await r.json();
+    const text=(data.content?.map(b=>b.text||'').join('')||'Sin respuesta.').replace(/\n/g,'<br>');
+    if(isDesktop){body.innerHTML=text;}
+    else{if(body)body.innerHTML=text;}
+  }catch(e){if(body)body.innerHTML='⚠️ Error de conexión. Intentá de nuevo.';}
+  btn.disabled=false;
+  btn.innerHTML=isDesktop?'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis IA':'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis';
+}
+
+// ══════════════════════════════════════════════════════
+// STARS & INIT
+// ══════════════════════════════════════════════════════
 function makeStars(){const c=document.getElementById('starsContainer');for(let i=0;i<40;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2.5+.8;s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*85}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;c.appendChild(s);}}
+
+// listen for dup warn on desc input
+document.getElementById('siDesc').addEventListener('input',checkDupWarn);
+
 makeStars();
 render();
 </script>
