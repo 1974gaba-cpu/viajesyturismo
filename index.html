@@ -1297,9 +1297,17 @@ function handleImportFile(e){
   reader.onload=ev=>{
     try{
       const json=JSON.parse(ev.target.result);
+      // Format 1: full Drive backup {v:5, active, trips:[...]}
+      if(json.v===5 && Array.isArray(json.trips)){
+        if(!confirm('Esto va a reemplazar TODOS los viajes con los del backup. ¿Confirmar?'))return;
+        D = json;
+        saveData(); render();
+        alert('Backup importado correctamente — '+json.trips.length+' viaje(s) cargados.');
+        return;
+      }
+      // Format 2: single trip export {exportedTrip:{...}} or bare trip object
       const trip=json.exportedTrip||json;
       if(!trip.id||!trip.nombre)throw new Error('Formato inválido');
-      // check if trip with same id already exists
       const exists=D.trips.findIndex(t=>t.id===trip.id);
       if(exists>=0){if(!confirm('Ya existe un viaje con ese ID. ¿Reemplazarlo?'))return;D.trips[exists]=trip;}
       else D.trips.push(trip);
@@ -1431,7 +1439,7 @@ async function driveLoadOrCreate(){
   setDriveStatus('Buscando en Drive...', '#8D99AE');
   try {
     const q = encodeURIComponent(`name='${DRIVE_FILE_NAME}' and trashed=false`);
-    const searchUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,modifiedTime)&orderBy=modifiedTime%20desc`;
+    const searchUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,modifiedTime,createdTime)&orderBy=createdTime%20asc`;
     const search = await fetch(searchUrl, { headers:{ Authorization: 'Bearer '+driveToken } });
     if(!search.ok){
       const err = await search.json().catch(()=>({}));
@@ -1440,32 +1448,29 @@ async function driveLoadOrCreate(){
       const result = await search.json();
       console.log('Drive search result:', result);
       if(result.files && result.files.length > 0){
-        // Try each file, pick the one with the most trip data
-        let bestData = null; let bestId = null; let bestScore = -1;
+        // Use the OLDEST file (first created = user's real data)
+        // Delete any duplicates created later
+        let chosenData = null; let chosenId = null;
         for(const f of result.files){
           try {
             const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`, { headers:{ Authorization: 'Bearer '+driveToken } });
             if(!res.ok) continue;
             const data = await res.json();
             if(!data || data.v !== 5) continue;
-            const score = (data.trips||[]).reduce((a,t)=>a+(t.days||[]).length+(t.gastos||[]).length, 0);
-            console.log(`File ${f.id} score: ${score}`);
-            if(score > bestScore){ bestScore=score; bestData=data; bestId=f.id; }
+            if(!chosenId){ chosenData=data; chosenId=f.id; } // first valid = oldest
+            else {
+              // delete this duplicate
+              try{ await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}`, {method:'DELETE', headers:{Authorization:'Bearer '+driveToken}}); }catch(e){}
+            }
           } catch(e){ continue; }
         }
-        if(bestData && bestId){
-          driveFileId = bestId;
+        if(chosenData && chosenId){
+          driveFileId = chosenId;
           localStorage.setItem('vm_driveFileId', driveFileId);
-          D = bestData; saveData(); render();
+          D = chosenData; saveData(); render();
           setDriveStatus('✓ Sincronizado', '#22C55E');
           hideDriveBanner();
           showVMToast('☁ Datos cargados desde Drive');
-          // Delete duplicate empty files
-          for(const f of result.files){
-            if(f.id !== bestId){
-              try{ await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}`, {method:'DELETE', headers:{Authorization:'Bearer '+driveToken}}); }catch(e){}
-            }
-          }
           return;
         }
       }
