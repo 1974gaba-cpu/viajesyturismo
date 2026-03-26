@@ -1420,6 +1420,7 @@ async function driveLoadOrCreate(){
           saveData();
           render();
           setDriveStatus('✓ Sincronizado', '#22C55E');
+          hideDriveBanner();
           showVMToast('☁ Datos cargados desde Drive');
           return;
         }
@@ -1432,7 +1433,7 @@ async function driveLoadOrCreate(){
   // Create new file
   setDriveStatus('Creando archivo...', '#8D99AE');
   await driveSave(true);
-  if(driveFileId){ setDriveStatus('✓ Archivo creado', '#22C55E'); showVMToast('☁ Archivo creado en Drive — auto-guardado activo'); }
+  if(driveFileId){ setDriveStatus('✓ Archivo creado', '#22C55E'); hideDriveBanner(); showVMToast('☁ Archivo creado en Drive — auto-guardado activo'); }
 }
 
 async function driveSave(force=false){
@@ -1476,19 +1477,39 @@ function driveSaveDebounced(){
 }
 
 function checkDriveBeforeEdit(){
-  if(driveToken) return;
-  let t = document.getElementById('vm-drive-warn');
-  if(!t){
-    t = document.createElement('div');
-    t.id = 'vm-drive-warn';
-    t.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#1a2a1a;border-bottom:2px solid #D97706;color:#FCD34D;font-family:"Outfit",sans-serif;font-size:13px;font-weight:700;padding:12px 24px;z-index:9999;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)';
-    t.innerHTML = '🔒 Drive no conectado — los cambios no se guardarán en la nube <span style="background:#D97706;color:#000;border-radius:6px;padding:3px 12px;font-weight:900;font-size:12px;margin-left:4px">Conectar ahora</span>';
-    t.onclick = ()=>{ driveAuth(); t.style.display='none'; };
-    document.body.appendChild(t);
-  }
-  t.style.display = 'flex';
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>{ t.style.display='none'; }, 7000);
+  // just a hook — banner is handled by showDriveBanner
+  showDriveBanner();
+}
+
+function showDriveBanner(){
+  if(driveToken){ hideDriveBanner(); return; }
+  if(document.getElementById('vm-drive-overlay')) return;
+  const ov = document.createElement('div');
+  ov.id = 'vm-drive-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(7,16,28,.88);backdrop-filter:blur(10px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px';
+  ov.innerHTML = `
+    <div style="background:linear-gradient(160deg,#0D1929,#132035);border:1px solid rgba(201,145,58,.35);border-radius:22px;padding:40px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6)">
+      <div style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:#C9913A;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:7px">
+        <i class="fa-solid fa-triangle-exclamation"></i> SESIÓN NO INICIADA
+      </div>
+      <div style="font-size:52px;margin-bottom:18px">🔒</div>
+      <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#EAD9BE;margin-bottom:12px;line-height:1.2">Tus viajes están<br>en Drive</div>
+      <div style="font-size:13px;color:#7899B8;line-height:1.6;margin-bottom:28px">Sin conexión solo ves datos de ejemplo —<br>no los que vos cargaste</div>
+      <button onclick="driveAuth()" style="width:100%;background:linear-gradient(135deg,#C9913A,#E8C078);color:#050D18;border:none;border-radius:13px;padding:16px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;box-shadow:0 6px 20px rgba(201,145,58,.35);transition:opacity .2s;margin-bottom:12px" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+        <i class="fa-brands fa-google" style="margin-right:8px"></i>Conectar y cargar mis datos
+      </button>
+      <div onclick="hideDriveBanner()" style="font-size:12px;color:#3D5A78;cursor:pointer;padding:6px;transition:color .2s" onmouseover="this.style.color='#7899B8'" onmouseout="this.style.color='#3D5A78'">
+        Solo explorar →
+      </div>
+    </div>`;
+  document.body.appendChild(ov);
+}
+
+function hideDriveBanner(){
+  const ov = document.getElementById('vm-drive-overlay');
+  if(ov) ov.remove();
+  const bar = document.getElementById('vm-drive-warn');
+  if(bar) bar.style.display = 'none';
 }
 
 function showVMToast(msg){
@@ -1515,6 +1536,7 @@ document.getElementById('siDesc').addEventListener('input',checkDupWarn);
 
 makeStars();
 render();
+showDriveBanner();
 </script>
 </body>
 </html>
