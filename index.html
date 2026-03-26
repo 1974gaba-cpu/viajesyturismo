@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ViajeManager ✈</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -603,6 +604,10 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
     <button class="sb-io-btn" onclick="exportJSON()"><i class="fa-solid fa-download"></i> Exportar</button>
     <button class="sb-io-btn" onclick="importJSON()"><i class="fa-solid fa-upload"></i> Importar</button>
   </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <button class="sb-io-btn" id="drive-btn" onclick="driveAuth()" style="flex:1;font-size:11px;font-weight:900;background:linear-gradient(135deg,#1a3a5c,#0f2847);border-color:#2e6da4;color:#6BB8E8">☁ Conectar Drive</button>
+    <span id="drive-status" style="font-size:10px;color:#8D99AE;display:none;flex-shrink:0"></span>
+  </div>
   <div class="sb-breakdown" id="sbBreakdown"></div>
   <div class="sb-cities" id="sbCities"></div>
   <button class="sb-ai-btn" id="sbAiBtn" onclick="runAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA</button>
@@ -842,7 +847,7 @@ gastos:[
 ]}]};}
 
 function loadData(){try{const r=localStorage.getItem(SK);if(!r)return seedData();const d=JSON.parse(r);if(!d||d.v!==5)return seedData();return d;}catch(e){return seedData();}}
-function saveData(){localStorage.setItem(SK,JSON.stringify(D));}
+function saveData(){localStorage.setItem(SK,JSON.stringify(D));driveSaveDebounced();}
 let D=loadData();
 function at(){return D.trips.find(t=>t.id===D.active)||D.trips[0];}
 
@@ -1332,6 +1337,156 @@ async function runAI(){
   }catch(e){if(body)body.innerHTML='⚠️ Error de conexión. Intentá de nuevo.';}
   btn.disabled=false;
   btn.innerHTML=isDesktop?'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis IA':'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis';
+}
+
+
+// ══════════════════════════════════════════════════════
+// GOOGLE DRIVE SYNC
+// ══════════════════════════════════════════════════════
+const DRIVE_CLIENT_ID = '27553125771-382is8pb6lvoqpuaj38tf6v6pdev8gdq.apps.googleusercontent.com';
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.email';
+const DRIVE_FILE_NAME = 'ViajeManager_data.json';
+const AUTHORIZED_EMAIL = '1974gaba@gmail.com';
+
+let driveToken = null;
+let driveFileId = (()=>{ const v=localStorage.getItem('vm_driveFileId'); return (v&&v!=='undefined'&&v!=='null')?v:null; })();
+let driveSaveTimeout = null;
+let driveTokenExpiry = null;
+let driveExpiryInterval = null;
+
+function setDriveStatus(msg, color='#8D99AE'){
+  const s=document.getElementById('drive-status');
+  if(!s) return;
+  s.style.display = msg ? 'block' : 'none';
+  s.style.color = color;
+  s.textContent = msg;
+}
+
+function setDriveTokenExpiry(expiresInSeconds){
+  driveTokenExpiry = Date.now() + expiresInSeconds * 1000;
+  if(driveExpiryInterval) clearInterval(driveExpiryInterval);
+  driveExpiryInterval = setInterval(()=>{
+    const mins = Math.round((driveTokenExpiry - Date.now()) / 60000);
+    if(mins <= 0){
+      clearInterval(driveExpiryInterval);
+      driveToken = null;
+      setDriveStatus('⚠ Sesión vencida', '#D97706');
+      const btn = document.getElementById('drive-btn');
+      if(btn){ btn.textContent = '☁ Reconectar'; btn.style.color='#D97706'; }
+      showVMToast('⚠ Sesión de Drive vencida — reconectá');
+    } else if(mins <= 10){
+      setDriveStatus(`☁ Activo — vence en ${mins}min`, '#D97706');
+    }
+  }, 60000);
+}
+
+function driveAuth(){
+  if(!window.google){ alert('Google Identity Services no cargó. Verificá tu conexión.'); return; }
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: DRIVE_CLIENT_ID,
+    scope: DRIVE_SCOPE,
+    callback: async (resp) => {
+      if(resp.error){ setDriveStatus('Error auth', '#EF4444'); return; }
+      try {
+        const whoRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', { headers:{ Authorization: 'Bearer '+resp.access_token } });
+        const who = await whoRes.json();
+        const detectedEmail = who.email || '';
+        if(detectedEmail.toLowerCase() !== AUTHORIZED_EMAIL.toLowerCase()){
+          alert(`⛔ Acceso no autorizado.
+Email: ${detectedEmail}`);
+          setDriveStatus('Acceso denegado', '#EF4444');
+          return;
+        }
+      } catch(e){ setDriveStatus('Error verificando identidad', '#EF4444'); return; }
+      driveToken = resp.access_token;
+      if(resp.expires_in) setDriveTokenExpiry(resp.expires_in);
+      const btn = document.getElementById('drive-btn');
+      if(btn){ btn.textContent = '☁ Conectado'; btn.style.color='#22C55E'; btn.style.borderColor='#22C55E'; }
+      setDriveStatus('Cargando...', '#8D99AE');
+      await driveLoadOrCreate();
+    }
+  });
+  client.requestAccessToken();
+}
+
+async function driveLoadOrCreate(){
+  if(driveFileId){
+    try {
+      const res = await fetch(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`, { headers:{ Authorization: 'Bearer '+driveToken } });
+      if(res.ok){
+        const data = await res.json();
+        if(data && data.v === 5){
+          D = data;
+          saveData();
+          render();
+          setDriveStatus('✓ Sincronizado', '#22C55E');
+          showVMToast('☁ Datos cargados desde Drive');
+          return;
+        }
+      } else {
+        driveFileId = null;
+        localStorage.removeItem('vm_driveFileId');
+      }
+    } catch(e){ driveFileId = null; localStorage.removeItem('vm_driveFileId'); }
+  }
+  // Create new file
+  setDriveStatus('Creando archivo...', '#8D99AE');
+  await driveSave(true);
+  if(driveFileId){ setDriveStatus('✓ Archivo creado', '#22C55E'); showVMToast('☁ Archivo creado en Drive — auto-guardado activo'); }
+}
+
+async function driveSave(force=false){
+  if(!driveToken){ return; }
+  setDriveStatus('Guardando...', '#8D99AE');
+  const blob = new Blob([JSON.stringify(D, null, 2)], {type:'application/json'});
+  try {
+    if(driveFileId){
+      const res = await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
+        method:'PATCH',
+        headers:{ Authorization:'Bearer '+driveToken, 'Content-Type':'application/json' },
+        body: blob
+      });
+      if(res.status === 401){ driveToken = null; setDriveStatus('⚠ Sesión vencida', '#D97706'); return; }
+      if(!res.ok){ setDriveStatus('Error al guardar', '#EF4444'); return; }
+    } else {
+      const meta = { name: DRIVE_FILE_NAME, mimeType:'application/json' };
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(meta)], {type:'application/json'}));
+      form.append('file', blob);
+      const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+        method:'POST',
+        headers:{ Authorization:'Bearer '+driveToken },
+        body: form
+      });
+      if(!res.ok){ setDriveStatus('Error creando archivo', '#EF4444'); return; }
+      const created = await res.json();
+      if(!created.id){ setDriveStatus('Error: sin ID', '#EF4444'); return; }
+      driveFileId = created.id;
+      localStorage.setItem('vm_driveFileId', driveFileId);
+    }
+    setDriveStatus('✓ Guardado', '#22C55E');
+    setTimeout(()=>setDriveStatus('☁ Activo','#22C55E'), 2000);
+  } catch(err){ setDriveStatus('Error: '+err.message, '#EF4444'); }
+}
+
+function driveSaveDebounced(){
+  if(!driveToken) return;
+  clearTimeout(driveSaveTimeout);
+  driveSaveTimeout = setTimeout(()=>driveSave(), 3000);
+}
+
+function showVMToast(msg){
+  let t = document.getElementById('vm-toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'vm-toast';
+    t.style.cssText = 'position:fixed;bottom:22px;right:22px;background:#132035;border:1px solid #22C55E;color:#22C55E;font-family:"Outfit",sans-serif;font-size:12px;font-weight:700;padding:10px 16px;border-radius:10px;z-index:9999;transition:opacity .4s;pointer-events:none';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>{ t.style.opacity='0'; }, 3500);
 }
 
 // ══════════════════════════════════════════════════════
