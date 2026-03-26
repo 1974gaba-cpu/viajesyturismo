@@ -1428,32 +1428,49 @@ async function driveLoadOrCreate(){
     } catch(e){ driveFileId = null; localStorage.removeItem('vm_driveFileId'); }
   }
   // 2. Search Drive for existing file by name (new device)
-  setDriveStatus('Buscando archivo en Drive...', '#8D99AE');
+  setDriveStatus('Buscando en Drive...', '#8D99AE');
   try {
     const q = encodeURIComponent(`name='${DRIVE_FILE_NAME}' and trashed=false`);
-    const search = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,modifiedTime)&orderBy=modifiedTime desc`, {
-      headers:{ Authorization: 'Bearer '+driveToken }
-    });
-    if(search.ok){
+    const searchUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,modifiedTime)&orderBy=modifiedTime%20desc`;
+    const search = await fetch(searchUrl, { headers:{ Authorization: 'Bearer '+driveToken } });
+    if(!search.ok){
+      const err = await search.json().catch(()=>({}));
+      console.log('Drive search failed:', search.status, err);
+    } else {
       const result = await search.json();
+      console.log('Drive search result:', result);
       if(result.files && result.files.length > 0){
-        driveFileId = result.files[0].id;
-        localStorage.setItem('vm_driveFileId', driveFileId);
-        // Load the found file
-        const res = await fetch(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`, { headers:{ Authorization: 'Bearer '+driveToken } });
-        if(res.ok){
-          const data = await res.json();
-          if(data && data.v === 5){
-            D = data; saveData(); render();
-            setDriveStatus('✓ Sincronizado', '#22C55E');
-            hideDriveBanner();
-            showVMToast('☁ Datos cargados desde Drive');
-            return;
+        // Try each file, pick the one with the most trip data
+        let bestData = null; let bestId = null; let bestScore = -1;
+        for(const f of result.files){
+          try {
+            const res = await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`, { headers:{ Authorization: 'Bearer '+driveToken } });
+            if(!res.ok) continue;
+            const data = await res.json();
+            if(!data || data.v !== 5) continue;
+            const score = (data.trips||[]).reduce((a,t)=>a+(t.days||[]).length+(t.gastos||[]).length, 0);
+            console.log(`File ${f.id} score: ${score}`);
+            if(score > bestScore){ bestScore=score; bestData=data; bestId=f.id; }
+          } catch(e){ continue; }
+        }
+        if(bestData && bestId){
+          driveFileId = bestId;
+          localStorage.setItem('vm_driveFileId', driveFileId);
+          D = bestData; saveData(); render();
+          setDriveStatus('✓ Sincronizado', '#22C55E');
+          hideDriveBanner();
+          showVMToast('☁ Datos cargados desde Drive');
+          // Delete duplicate empty files
+          for(const f of result.files){
+            if(f.id !== bestId){
+              try{ await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}`, {method:'DELETE', headers:{Authorization:'Bearer '+driveToken}}); }catch(e){}
+            }
           }
+          return;
         }
       }
     }
-  } catch(e){ console.log('Drive search error:', e); }
+  } catch(e){ console.log('Drive search exception:', e); }
   // 3. No file found — create new
   setDriveStatus('Creando archivo nuevo...', '#8D99AE');
   await driveSave(true);
