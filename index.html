@@ -865,19 +865,29 @@ let selSiType='hotel';
 // ══════════════════════════════════════════════════════
 // CALC
 // ══════════════════════════════════════════════════════
-function calcTotal(t){
-  // Total = sum of gastos only (items in days are reference)
-  return t.gastos.reduce((a,g)=>{
-    const m=g.monto*(g.x2?(t.pax||2):1);
-    return a+(g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27);
-  },0);
-}
+function toUSD(monto,moneda){return moneda==='USD'?monto:moneda==='EUR'?monto*1.08:monto*1.27;}
 function dayItemsTotal(day){
   if(!day.items||!day.items.length) return 0;
-  return day.items.reduce((a,it)=>{
-    const u=it.moneda==='USD'?it.monto:it.moneda==='EUR'?it.monto*1.08:it.monto*1.27;
-    return a+u;
+  return day.items.reduce((a,it)=>a+toUSD(it.monto,it.moneda),0);
+}
+function calcTotal(t){
+  // Sum gastos generales
+  const gastosTot = t.gastos.reduce((a,g)=>{
+    const m=g.monto*(g.x2?(t.pax||2):1);
+    return a+toUSD(m,g.moneda);
   },0);
+  // Sum all day items
+  const itemsTot = (t.days||[]).reduce((a,d)=>a+dayItemsTotal(d),0);
+  return gastosTot + itemsTot;
+}
+function calcTotalBySource(t){
+  // Returns {gastos, items} separately for breakdown display
+  const gastos = t.gastos.reduce((a,g)=>{
+    const m=g.monto*(g.x2?(t.pax||2):1);
+    return a+toUSD(m,g.moneda);
+  },0);
+  const items = (t.days||[]).reduce((a,d)=>a+dayItemsTotal(d),0);
+  return {gastos, items, total: gastos+items};
 }
 
 // ══════════════════════════════════════════════════════
@@ -1030,12 +1040,23 @@ function renderGastos(t){
 
 function renderSidebar(t){
   const pax=t.pax||2;
+  // Gastos generales por categoria
   const ct={};
-  t.gastos.forEach(g=>{const m=g.monto*(g.x2?pax:1);const u=g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27;ct[g.cat]=(ct[g.cat]||0)+u;});
-  const tot=calcTotal(t);
+  t.gastos.forEach(g=>{const m=g.monto*(g.x2?pax:1);const u=toUSD(m,g.moneda);ct[g.cat]=(ct[g.cat]||0)+u;});
+  // Items de días por tipo (mapped to cat keys)
+  const SI_TO_CAT={hotel:'hospedaje',traslado:'transp_loc',entrada:'atraccion',comida:'comidas',tour:'excursion',tren:'tren',uber:'transp_loc',otro:'otro'};
+  (t.days||[]).forEach(d=>{
+    (d.items||[]).forEach(it=>{
+      const cat=SI_TO_CAT[it.tipo]||'otro';
+      ct[cat]=(ct[cat]||0)+toUSD(it.monto,it.moneda);
+    });
+  });
+  const src=calcTotalBySource(t);
   const bd=document.getElementById('sbBreakdown');
   const rows=Object.entries(ct).map(([cat,usd])=>{const C=CATS[cat]||CATS.otro;return`<div class="sb-row"><div class="sb-row-l"><span>${C.e}</span>${C.n}</div><div class="sb-row-r">${fM(usd,'USD')}</div></div>`;}).join('');
-  bd.innerHTML=`<div class="sb-bk-title">Desglose por categoría</div>${rows}<div class="sb-row"><div class="sb-row-l"><b>Total</b></div><div class="sb-row-r">${fM(tot,'USD')}</div></div>`;
+  const srcRows = (src.items>0?`<div class="sb-row" style="font-size:10px;color:var(--ink3)"><div class="sb-row-l">📅 Ítems del itinerario</div><div class="sb-row-r">${fM(src.items,'USD')}</div></div>`:'')
+    +(src.gastos>0?`<div class="sb-row" style="font-size:10px;color:var(--ink3)"><div class="sb-row-l">💰 Gastos generales</div><div class="sb-row-r">${fM(src.gastos,'USD')}</div></div>`:'');
+  bd.innerHTML=`<div class="sb-bk-title">Desglose por categoría</div>${rows}${srcRows}<div class="sb-row"><div class="sb-row-l"><b>Total</b></div><div class="sb-row-r">${fM(src.total,'USD')}</div></div>`;
   const est=t.days.filter(d=>d.tipo==='est');
   const cities=[...new Set(est.map(d=>d.ciudad.split(/[–\-\/]/)[0].trim()))];
   document.getElementById('sbCities').innerHTML=`<div class="sb-cities-title">📍 ${cities.length} destinos · ${est.length} estadías</div>`+cities.map(c=>`<span class="sb-chip">📍 ${c}</span>`).join('');
@@ -1043,7 +1064,10 @@ function renderSidebar(t){
 
 function renderResumen(t){
   const el=document.getElementById('resContent');const pax=t.pax||2;const tot=calcTotal(t);
-  const ct={};t.gastos.forEach(g=>{const m=g.monto*(g.x2?pax:1);const u=g.moneda==='USD'?m:g.moneda==='EUR'?m*1.08:m*1.27;ct[g.cat]=(ct[g.cat]||0)+u;});
+  const SI_TO_CAT2={hotel:'hospedaje',traslado:'transp_loc',entrada:'atraccion',comida:'comidas',tour:'excursion',tren:'tren',uber:'transp_loc',otro:'otro'};
+  const ct={};
+  t.gastos.forEach(g=>{const m=g.monto*(g.x2?pax:1);ct[g.cat]=(ct[g.cat]||0)+toUSD(m,g.moneda);});
+  (t.days||[]).forEach(d=>{(d.items||[]).forEach(it=>{const cat=SI_TO_CAT2[it.tipo]||'otro';ct[cat]=(ct[cat]||0)+toUSD(it.monto,it.moneda);});});
   const est=t.days.filter(d=>d.tipo==='est');const trl=t.days.filter(d=>d.tipo==='trsl');
   const cities=[...new Set(est.map(d=>d.ciudad.split(/[–\-\/]/)[0].trim()))];
   const stxt=(t.months&&t.months.length)?seasonStr(t.months):'Temporada a definir';
