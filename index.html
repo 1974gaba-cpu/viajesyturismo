@@ -1094,7 +1094,7 @@ function renderResumen(t){
 // ══════════════════════════════════════════════════════
 // DAY MODAL
 // ══════════════════════════════════════════════════════
-function openDayModal(dayId, afterIdx){
+function openDayModal(dayId, afterIdx){ checkDriveBeforeEdit();
   editDayId=dayId;insertAfterIdx=afterIdx;
   document.getElementById('dayModalTitle').textContent=dayId?'Editar Día':'Agregar Día';
   if(dayId){
@@ -1151,7 +1151,7 @@ function moveDay(idx,dir){
 // ══════════════════════════════════════════════════════
 // SUBITEM MODAL
 // ══════════════════════════════════════════════════════
-function openSubModal(dayId,subId){
+function openSubModal(dayId,subId){ checkDriveBeforeEdit();
   editSubDayId=dayId;editSubId=subId;
   document.getElementById('subModalTitle').textContent=subId?'Editar ítem':'Agregar ítem al día';
   if(subId){
@@ -1203,7 +1203,7 @@ function deleteSubitem(dayId,subId){const t=at();const d=t.days.find(x=>x.id===d
 // ══════════════════════════════════════════════════════
 // GASTO MODAL
 // ══════════════════════════════════════════════════════
-function openGastoModal(gastoId){
+function openGastoModal(gastoId){ checkDriveBeforeEdit();
   editGastoId=gastoId;
   document.getElementById('gastoModalTitle').textContent=gastoId?'Editar Gasto':'Agregar Gasto';
   if(gastoId){
@@ -1473,6 +1473,22 @@ function driveSaveDebounced(){
   if(!driveToken) return;
   clearTimeout(driveSaveTimeout);
   driveSaveTimeout = setTimeout(()=>driveSave(), 3000);
+}
+
+function checkDriveBeforeEdit(){
+  if(driveToken) return;
+  let t = document.getElementById('vm-drive-warn');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'vm-drive-warn';
+    t.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#1a2a1a;border-bottom:2px solid #D97706;color:#FCD34D;font-family:"Outfit",sans-serif;font-size:13px;font-weight:700;padding:12px 24px;z-index:9999;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3)';
+    t.innerHTML = '🔒 Drive no conectado — los cambios no se guardarán en la nube <span style="background:#D97706;color:#000;border-radius:6px;padding:3px 12px;font-weight:900;font-size:12px;margin-left:4px">Conectar ahora</span>';
+    t.onclick = ()=>{ driveAuth(); t.style.display='none'; };
+    document.body.appendChild(t);
+  }
+  t.style.display = 'flex';
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>{ t.style.display='none'; }, 7000);
 }
 
 function showVMToast(msg){
