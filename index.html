@@ -1410,30 +1410,58 @@ Email: ${detectedEmail}`);
 }
 
 async function driveLoadOrCreate(){
+  // 1. Try known fileId (same device)
   if(driveFileId){
     try {
       const res = await fetch(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`, { headers:{ Authorization: 'Bearer '+driveToken } });
       if(res.ok){
         const data = await res.json();
         if(data && data.v === 5){
-          D = data;
-          saveData();
-          render();
+          D = data; saveData(); render();
           setDriveStatus('✓ Sincronizado', '#22C55E');
           hideDriveBanner();
           showVMToast('☁ Datos cargados desde Drive');
           return;
         }
-      } else {
-        driveFileId = null;
-        localStorage.removeItem('vm_driveFileId');
       }
+      driveFileId = null; localStorage.removeItem('vm_driveFileId');
     } catch(e){ driveFileId = null; localStorage.removeItem('vm_driveFileId'); }
   }
-  // Create new file
-  setDriveStatus('Creando archivo...', '#8D99AE');
+  // 2. Search Drive for existing file by name (new device)
+  setDriveStatus('Buscando archivo en Drive...', '#8D99AE');
+  try {
+    const q = encodeURIComponent(`name='${DRIVE_FILE_NAME}' and trashed=false`);
+    const search = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,modifiedTime)&orderBy=modifiedTime desc`, {
+      headers:{ Authorization: 'Bearer '+driveToken }
+    });
+    if(search.ok){
+      const result = await search.json();
+      if(result.files && result.files.length > 0){
+        driveFileId = result.files[0].id;
+        localStorage.setItem('vm_driveFileId', driveFileId);
+        // Load the found file
+        const res = await fetch(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`, { headers:{ Authorization: 'Bearer '+driveToken } });
+        if(res.ok){
+          const data = await res.json();
+          if(data && data.v === 5){
+            D = data; saveData(); render();
+            setDriveStatus('✓ Sincronizado', '#22C55E');
+            hideDriveBanner();
+            showVMToast('☁ Datos cargados desde Drive');
+            return;
+          }
+        }
+      }
+    }
+  } catch(e){ console.log('Drive search error:', e); }
+  // 3. No file found — create new
+  setDriveStatus('Creando archivo nuevo...', '#8D99AE');
   await driveSave(true);
-  if(driveFileId){ setDriveStatus('✓ Archivo creado', '#22C55E'); hideDriveBanner(); showVMToast('☁ Archivo creado en Drive — auto-guardado activo'); }
+  if(driveFileId){
+    setDriveStatus('✓ Archivo creado', '#22C55E');
+    hideDriveBanner();
+    showVMToast('☁ Archivo creado en Drive — auto-guardado activo');
+  }
 }
 
 async function driveSave(force=false){
