@@ -32,11 +32,11 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   .section-hdr{display:flex;justify-content:space-between;align-items:center;padding:24px 0 14px;border-bottom:2px solid var(--border);margin-bottom:18px}
   /* Fixed FABs desktop */
   .desktop-fabs{position:fixed;bottom:28px;right:calc(360px + 24px);display:flex;flex-direction:column;gap:8px;z-index:50}
-  .dfab{display:flex;align-items:center;gap:8px;border:none;border-radius:11px;padding:9px 14px;font-family:'Outfit',sans-serif;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;transition:all .2s;white-space:nowrap}
-  .dfab.day{background:linear-gradient(135deg,#FF8C5A,#FFAA7A);color:#fff;box-shadow:0 4px 14px rgba(255,140,90,.25)}
-  .dfab.day:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(255,140,90,.35)}
-  .dfab.gasto{background:#fff;color:var(--ink2);border:1.5px solid var(--border);box-shadow:0 3px 10px rgba(0,0,0,.08)}
-  .dfab.gasto:hover{border-color:#FF8C5A;color:#FF8C5A}
+  .dfab{display:flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:12px 22px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .dfab.day{background:linear-gradient(135deg,#FF6B35,#FF8C5A);color:#fff;box-shadow:0 4px 16px rgba(255,107,53,.35)}
+  .dfab.day:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,107,53,.45)}
+  .dfab.gasto{background:#fff;color:var(--coral);border:1.5px solid var(--coral2);box-shadow:0 3px 10px rgba(0,0,0,.08)}
+  .dfab.gasto:hover{background:#FFF3E4;border-color:var(--coral);color:var(--coral)}
   .section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink)}
   .add-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;border:none;border-radius:11px;padding:10px 18px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.25);transition:all .2s}
   .add-btn:hover{transform:translateY(-1px)}
@@ -46,7 +46,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   .sb-total{background:linear-gradient(135deg,#0F3460,#1A1A4E);border-radius:16px;padding:20px;text-align:center;position:relative;overflow:hidden}
   .sb-total::before{content:'✈';position:absolute;font-size:90px;opacity:.04;right:-10px;top:-10px}
   .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:6px}
-  .sb-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff;line-height:1}
+  .sb-num{font-family:'Playfair Display',serif;font-size:clamp(18px,2.2vw,30px);font-weight:900;color:#fff;line-height:1.1;word-break:break-all}
   .sb-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:5px}
   .sb-season{display:inline-block;background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.3);border-radius:20px;padding:3px 11px;font-size:10px;font-weight:700;color:var(--gold);margin-top:8px}
   .sb-btn{width:100%;border-radius:10px;padding:10px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px}
@@ -610,8 +610,8 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   </div>
   <div class="sb-breakdown" id="sbBreakdown"></div>
   <div class="sb-cities" id="sbCities"></div>
-  <button class="sb-ai-btn" id="sbAiBtn" onclick="runAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA</button>
-  <div class="sb-ai-res" id="sbAiRes"></div>
+  <button class="sb-ai-btn" id="sbAiBtn" onclick="openInClaude()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA</button>
+  <div class="sb-ai-res" id="sbAiRes" style="font-size:11px;color:var(--ink3);padding:8px;display:none"></div>
 </aside>
 
 <!-- FABs (mobile) -->
@@ -1086,7 +1086,7 @@ function renderResumen(t){
       <button class="io-btn" onclick="importJSON()"><i class="fa-solid fa-upload"></i> Importar JSON</button>
     </div>
     <div class="big-total"><div class="bt-lbl">Total estimado · ${pax} personas</div><div class="bt-num">${fM(tot,'USD')}</div><div class="bt-sub">Por persona: ${fM(tot/pax,'USD')} · ${t.days.length} días</div><div class="bt-season">${stxt} · ${dtxt}</div><div style="margin-top:6px">${confirmBtn}</div></div>
-    <div class="ai-card"><button class="ai-btn" id="aiBtn" onclick="runAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA · Estimados de precio</button><div class="ai-result" id="aiResult"><div class="ai-result-ttl"><i class="fa-solid fa-robot"></i> Análisis</div><div class="ai-result-body" id="aiBody"></div></div></div>
+    <div class="ai-card"><button class="ai-btn" id="aiBtn" onclick="openInClaude()"><i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con IA en Claude.ai</button><div class="ai-result" id="aiResult"><div class="ai-result-ttl"><i class="fa-solid fa-robot"></i> Análisis</div><div class="ai-result-body" id="aiBody"></div></div></div>
     <div class="res-grid">${cards}</div>
     <div class="cities-card"><div class="cities-lbl">📍 ${cities.length} destinos · ${est.length} estadías · ${trl.length} traslados</div>${pills}</div>`;
 }
@@ -1322,29 +1322,57 @@ function handleImportFile(e){
 // ══════════════════════════════════════════════════════
 // AI
 // ══════════════════════════════════════════════════════
-async function runAI(){
-  const t=at();const pax=t.pax||2;
-  const isDesktop=window.innerWidth>=900;
-  const btn=isDesktop?document.getElementById('sbAiBtn'):document.getElementById('aiBtn');
-  const result=isDesktop?document.getElementById('sbAiRes'):document.getElementById('aiResult');
-  const body=isDesktop?document.getElementById('sbAiRes'):document.getElementById('aiBody');
-  if(!btn)return;
-  btn.disabled=true;btn.innerHTML='<div class="ai-loader">Analizando tu viaje...</div>';
-  if(result){result.classList.add('show');}
-  if(body)body.innerHTML='<div class="ai-loader">Consultando...</div>';
-  const itin=t.days.map(d=>{const items=d.items&&d.items.length?' ['+d.items.map(i=>i.desc+' $'+i.monto+' '+i.moneda).join(', ')+']':'';return`Día ${d.n}: ${d.ciudad}${items}`;}).join('\n');
-  const gc=t.gastos.map(g=>`- ${g.desc}: ${g.monto} ${g.moneda}${g.x2?' ×'+pax+' pers':''}`).join('\n');
+function openInClaude(){
+  const t=at(); const pax=t.pax||2;
+  const itin=t.days.map(d=>{
+    const items=d.items&&d.items.length?' ['+d.items.map(i=>i.desc+' $'+i.monto+' '+i.moneda).join(', ')+']':'';
+    return 'Día '+d.n+': '+d.ciudad+items;
+  }).join('\n');
+  const gc=t.gastos.map(g=>'- '+g.desc+': '+g.monto+' '+g.moneda+(g.x2?' ×'+pax+' pers':'')).join('\n');
   const stxt=(t.months&&t.months.length)?seasonStr(t.months):'sin definir';
-  const prompt=`Sos experto en viajes a Europa para argentinos. Analizá:\n\nVIAJE: ${t.nombre} | TEMPORADA: ${stxt} | DURACIÓN: ${t.dias||'?'} días (${(t.dias||1)-1} noches) | PERSONAS: ${pax}${t.confirmedDate?' | SALIDA: '+t.confirmedDate:''}\n\nITINERARIO:\n${itin}\n\nGASTOS:\n${gc||'Ninguno'}\nTOTAL GASTOS: USD ${Math.round(calcTotal(t)).toLocaleString()}\n\nEn español argentino, conciso:\n1. 💬 Evaluación del presupuesto para ${pax} personas\n2. ✈️ Vuelos BUE ↔ Europa para ${stxt} — rangos. Mencioná Turismo City, Skyscanner y Google Flights.\n3. 🏨 Hospedaje — ¿los montos son realistas? Booking/Airbnb/Trivago por ciudad.\n4. 🍽️ Comidas diarias para ${pax} personas\n5. 🎡 ¿Falta algo obvio?\n6. 💡 3 consejos concretos\nTerminá con rango total para ${pax} personas.`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
-    const data=await r.json();
-    const text=(data.content?.map(b=>b.text||'').join('')||'Sin respuesta.').replace(/\n/g,'<br>');
-    if(isDesktop){body.innerHTML=text;}
-    else{if(body)body.innerHTML=text;}
-  }catch(e){if(body)body.innerHTML='⚠️ Error de conexión. Intentá de nuevo.';}
-  btn.disabled=false;
-  btn.innerHTML=isDesktop?'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis IA':'<i class="fa-solid fa-wand-magic-sparkles"></i> Actualizar análisis';
+  const cityList = [...new Set(t.days.filter(d=>d.tipo==='est').map(d=>d.ciudad.split(/[\/\-→–]/)[0].trim()))].join(', ');
+  const prompt = `Sos experto en viajes a Europa para turistas argentinos, con conocimiento profundo de atracciones, gastronomía y logística. Analizá este viaje y sé muy específico:
+
+VIAJE: ${t.nombre}
+TEMPORADA: ${stxt} | DURACIÓN: ${t.dias||'?'} días (${(t.dias||1)-1} noches) | PERSONAS: ${pax}${t.confirmedDate?' | SALIDA: '+t.confirmedDate:''}
+CIUDADES: ${cityList}
+
+ITINERARIO ACTUAL:
+${itin}
+
+GASTOS CARGADOS:
+${gc||'Ninguno'}
+TOTAL CARGADO: USD ${Math.round(calcTotal(t)).toLocaleString()}
+
+Respondé en español argentino. Sé concreto, con precios aproximados en USD o EUR:
+
+1. 💬 PRESUPUESTO — ¿Es realista para ${pax} personas en ${stxt}? ¿Qué está bien estimado y qué está desfasado?
+
+2. ✈️ VUELOS — Rango actual BUE ↔ Europa para ${stxt}. Mencioná Turismo City (mejor para argentinos), Skyscanner y Google Flights. ¿Directo o escala conviene más para esta ruta?
+
+3. 🏨 HOSPEDAJE — ¿Los montos son realistas por ciudad? Para cada ciudad del itinerario decí si conviene más Booking, Airbnb o Trivago y por qué.
+
+4. 🍽️ GASTRONOMÍA por ciudad — Para CADA ciudad del itinerario mencioná:
+   - 2-3 platos o experiencias gastronómicas que NO hay que perderse
+   - Rango de precio por persona en restaurante medio
+   - Si hay mercados, tapas, street food o experiencias únicas de esa ciudad
+   - Una búsqueda en TripAdvisor o TheFork que recomendarías
+
+5. 🎡 ATRACCIONES Y TOURS — Para CADA ciudad del itinerario:
+   - ¿Qué está en el itinerario que está bien?
+   - ¿Qué falta que TODO el mundo hace y no está anotado? Con precio aproximado de entrada
+   - ¿Hay algún pase conviene comprar? (Paris Pass, London Pass, Museum Pass, etc.) con precio y qué incluye
+   - Tours en Civitatis o GetYourGuide que recomendarías con precio aproximado
+   - Algo que la mayoría de turistas se pierde y vale la pena
+
+6. 🚇 TRANSPORTE LOCAL — ¿Hay passes de transporte que convienen? (Navigo París, Oyster Londres, etc.) Con precio aproximado
+
+7. 💡 TOP 5 CONSEJOS específicos para este itinerario en temporada ${stxt} — cosas concretas que marcan la diferencia
+
+Terminá con un resumen del presupuesto total recomendado para ${pax} personas, desglosado por categoría.`;
+
+  const url = 'https://claude.ai/new?q=' + encodeURIComponent(prompt);
+  window.open(url, '_blank');
 }
 
 
