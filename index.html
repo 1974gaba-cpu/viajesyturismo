@@ -609,6 +609,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   </div>
   <div style="display:flex;align-items:center;gap:8px">
     <button class="sb-io-btn" id="drive-btn" onclick="driveAuth()" style="flex:1;font-size:11px;font-weight:900;background:linear-gradient(135deg,#1a3a5c,#0f2847);border-color:#2e6da4;color:#6BB8E8">☁ Conectar Drive</button>
+    <button class="sb-io-btn" onclick="forceReloadDrive()" title="Forzar recarga desde Drive" style="flex:0;padding:9px 10px;font-size:13px" id="drive-reload-btn">🔄</button>
     <span id="drive-status" style="font-size:10px;color:#8D99AE;display:none;flex-shrink:0"></span>
   </div>
   <div class="sb-breakdown" id="sbBreakdown"></div>
@@ -1555,6 +1556,15 @@ function driveSaveDebounced(){
   if(!driveToken) return;
   clearTimeout(driveSaveTimeout);
   driveSaveTimeout = setTimeout(()=>driveSave(), 3000);
+}
+
+function forceReloadDrive(){
+  if(!driveToken){ alert('Primero conectá Drive.'); return; }
+  if(!confirm('Esto va a limpiar el archivo guardado localmente y buscar el más actualizado en Drive. ¿Continuar?')) return;
+  driveFileId = null;
+  localStorage.removeItem('vm_driveFileId');
+  setDriveStatus('Buscando...', '#8D99AE');
+  driveLoadOrCreate();
 }
 
 function checkDriveBeforeEdit(){
