@@ -49,7 +49,7 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
   .sb-total{background:linear-gradient(135deg,#0F3460,#1A1A4E);border-radius:16px;padding:20px;text-align:center;position:relative;overflow:hidden}
   .sb-total::before{content:'✈';position:absolute;font-size:90px;opacity:.04;right:-10px;top:-10px}
   .sb-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:6px}
-  .sb-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sb-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#fff;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
   .sb-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:5px}
   .sb-season{display:inline-block;background:rgba(255,183,3,.15);border:1px solid rgba(255,183,3,.3);border-radius:20px;padding:3px 11px;font-size:10px;font-weight:700;color:var(--gold);margin-top:8px}
   .sb-btn{width:100%;border-radius:10px;padding:10px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px}
@@ -314,6 +314,8 @@ body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--cream);mi
     <div class="cfg-pill" onclick="openSeasonModal()"><i class="fa-regular fa-calendar"></i><span id="seasonLabel">Temporada</span></div>
     <div class="cfg-pill" onclick="openDurationModal()"><i class="fa-solid fa-moon"></i><span id="durLabel">Duración</span></div>
     <div class="cfg-pill confirmed" onclick="openConfirmDateModal()" id="confirmedPill" style="display:none"><i class="fa-solid fa-check-circle"></i><span id="confirmedLabel">Confirmado</span></div>
+    <div class="cfg-pill" id="drive-pill-mobile" onclick="mobiledriveAction()" style="background:rgba(43,110,180,.25);border-color:rgba(43,110,180,.4)"><i class="fa-solid fa-cloud" style="color:#6BB8E8"></i><span id="drive-pill-label">Conectar Drive</span></div>
+    <div class="cfg-pill" onclick="forceReloadDrive()" style="background:rgba(255,255,255,.08)" title="Recargar desde Drive"><i class="fa-solid fa-rotate" style="color:#FFB703"></i><span>Recargar</span></div>
   </div>
   <div class="hdr-stats">
     <div class="sbox"><div class="sl">Total</div><div class="sv coral" id="svTotal">$—</div></div>
@@ -1442,6 +1444,10 @@ Email: ${detectedEmail}`);
       if(resp.expires_in) setDriveTokenExpiry(resp.expires_in);
       const btn = document.getElementById('drive-btn');
       if(btn){ btn.textContent = '☁ Conectado'; btn.style.color='#22C55E'; btn.style.borderColor='#22C55E'; }
+      const mobilePill = document.getElementById('drive-pill-label');
+      if(mobilePill) mobilePill.textContent = '✓ Drive';
+      const mobileIcon = document.querySelector('#drive-pill-mobile i');
+      if(mobileIcon) mobileIcon.style.color = '#22C55E';
       setDriveStatus('Cargando...', '#8D99AE');
       await driveLoadOrCreate();
     }
@@ -1556,6 +1562,11 @@ function driveSaveDebounced(){
   if(!driveToken) return;
   clearTimeout(driveSaveTimeout);
   driveSaveTimeout = setTimeout(()=>driveSave(), 3000);
+}
+
+function mobiledriveAction(){
+  if(driveToken){ forceReloadDrive(); }
+  else { driveAuth(); }
 }
 
 function forceReloadDrive(){
